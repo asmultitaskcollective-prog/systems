@@ -97,3 +97,669 @@
 
     .nav-links a:hover { border-color: var(--line); color: var(--ink); background: rgba(255, 255, 255, .6); }
     .nav-links .nav-cta { background: var(--dark); color: var(--dark-ink); border-color: var(--dark); }
+
+    .hero { padding: 72px 0 42px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.22fr) minmax(300px, .78fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .hero-main, .panel, .card, .contact-form, .contact-info {
+      background: rgba(255, 255, 255, .82);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 16px 45px rgba(23, 32, 29, .06);
+    }
+
+    .hero-main { padding: clamp(28px, 5vw, 56px); }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 18px;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 780px;
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: .95;
+      letter-spacing: -.055em;
+      margin-bottom: 22px;
+    }
+
+    .lead {
+      max-width: 670px;
+      color: #34413d;
+      font-size: clamp(18px, 2.2vw, 22px);
+      line-height: 1.45;
+      margin-bottom: 16px;
+    }
+
+    .sub {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 28px;
+    }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      font-family: var(--mono);
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .button:hover { transform: translateY(-1px); }
+    .button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .button.secondary { background: #fff; color: var(--ink); }
+    .button.dark { background: #fff; color: var(--dark); border-color: #fff; }
+
+    .check-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .check-item {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: #35423e;
+      font-size: 14px;
+    }
+
+    .check-item::before {
+      content: "OK";
+      display: inline-flex;
+      margin-right: 8px;
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 18px;
+      grid-template-rows: 1fr auto;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--quiet);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .panel-body { padding: 16px; }
+    .signal-list { display: grid; gap: 10px; }
+    .signal {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .signal strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .signal span { color: var(--muted); font-size: 13px; }
+
+    .audit-box {
+      background: var(--dark);
+      color: var(--dark-ink);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .audit-box h3 { font-size: 22px; line-height: 1.15; margin-bottom: 10px; }
+    .audit-box p { color: #b8c7c2; font-size: 14px; margin-bottom: 16px; }
+    .audit-box small { display: block; color: #8da09a; font-family: var(--mono); text-align: center; margin-top: 10px; }
+
+    section { padding: 58px 0; scroll-margin-top: 82px; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      max-width: 720px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1;
+      letter-spacing: -.045em;
+      margin-bottom: 10px;
+    }
+
+    .section-head p { max-width: 650px; color: var(--muted); margin-bottom: 0; }
+    .divider { height: 1px; background: var(--line); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+
+    .card { overflow: hidden; }
+    .card-body { padding: 22px; }
+    .label {
+      display: inline-flex;
+      margin-bottom: 14px;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--quiet);
+      background: var(--surface-2);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .card h3 { font-size: 21px; line-height: 1.18; letter-spacing: -.02em; margin-bottom: 10px; }
+    .card p, .card li { color: var(--muted); font-size: 14px; }
+    ul { padding-left: 18px; margin: 0; }
+    li + li { margin-top: 7px; }
+    li::marker { color: var(--accent); }
+
+    .dark-band {
+      background: var(--dark);
+      color: var(--dark-ink);
+      padding: 58px 0;
+      margin: 30px 0;
+    }
+
+    .dark-band .section-head p { color: #b8c7c2; }
+    .case-card {
+      border: 1px solid rgba(239, 245, 242, .14);
+      border-radius: 8px;
+      padding: 22px;
+      background: rgba(255, 255, 255, .045);
+    }
+
+    .case-card h3 { font-size: 21px; line-height: 1.22; margin-bottom: 10px; }
+    .case-card p { color: #b8c7c2; font-size: 14px; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill {
+      padding: 4px 8px;
+      border: 1px solid rgba(239, 245, 242, .16);
+      border-radius: 999px;
+      color: #b8c7c2;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .contact-grid { display: grid; grid-template-columns: .88fr 1.12fr; gap: 14px; }
+    .contact-info, .contact-form { overflow: hidden; }
+    .contact-body { padding: 22px; }
+    .note {
+      border-left: 3px solid var(--accent-2);
+      background: rgba(216, 139, 31, .1);
+      padding: 14px;
+      border-radius: 0 8px 8px 0;
+      color: #4e4638;
+      font-size: 14px;
+      margin: 18px 0;
+    }
+
+    .contact-methods { display: grid; gap: 10px; }
+    .contact-method {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface-2);
+    }
+
+    .contact-method strong { display: block; margin-bottom: 4px; }
+    .contact-method span { color: var(--muted); font-size: 14px; }
+
+    form { display: grid; gap: 12px; }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--quiet);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      padding: 11px 12px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(11, 118, 111, .1);
+    }
+
+    textarea { min-height: 132px; resize: vertical; }
+    .form-note { margin: 4px 0 0; color: var(--quiet); font-family: var(--mono); font-size: 11px; text-align: center; }
+
+    .cta-band {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      border-radius: 8px;
+      background: var(--dark);
+      color: var(--dark-ink);
+      padding: 24px;
+      margin-bottom: 38px;
+    }
+
+    .cta-band strong { display: block; font-size: 22px; line-height: 1.2; margin-bottom: 5px; }
+    .cta-band span { color: #b8c7c2; font-size: 14px; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 26px 0 38px;
+      color: var(--quiet);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .footer-line { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      background: var(--dark);
+      color: var(--dark-ink);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid, .contact-grid { grid-template-columns: 1fr; }
+      .grid-3, .grid-2 { grid-template-columns: 1fr; }
+      .check-list { grid-template-columns: 1fr; }
+      .section-head, .cta-band { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (max-width: 640px) {
+      .nav { align-items: flex-start; flex-direction: column; padding: 12px 0; }
+      .nav-links { justify-content: flex-start; }
+      .hero { padding-top: 44px; }
+      h1 { font-size: clamp(38px, 13vw, 54px); }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="topbar">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Ops Repair Studio home">
+        <span class="brand-mark">OR</span>
+        <span>Ops Repair Studio</span>
+      </a>
+      <div class="nav-links">
+        <a href="#diagnostics">Diagnostics</a>
+        <a href="#outcomes">Outcomes</a>
+        <a href="#work">Work</a>
+        <a class="nav-cta" href="#contact">Request audit</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero shell" id="hero">
+      <div class="hero-grid">
+        <div class="hero-main">
+          <div class="kicker">CRM, automation, and operating systems</div>
+          <h1>Quiet the messy parts of a growing operation.</h1>
+          <p class="lead">Ops Repair Studio rebuilds the practical layer behind sales, service, handoffs, documentation, and follow-up.</p>
+          <p class="sub">The work is for teams that already have customers, tools, and momentum, but keep losing time to unclear records, brittle workflows, repeated questions, and manual cleanup.</p>
+          <div class="actions">
+            <a class="button primary" href="#contact">Request a systems audit</a>
+            <a class="button secondary" href="#outcomes">See what gets fixed</a>
+          </div>
+          <div class="check-list" aria-label="Common fixes">
+            <div class="check-item">CRM stages that match real operating states</div>
+            <div class="check-item">Automation with fallbacks and visible failure points</div>
+            <div class="check-item">SOPs and decision paths people can actually use</div>
+            <div class="check-item">Cleaner handoffs between sales, service, and admin</div>
+          </div>
+        </div>
+
+        <aside class="hero-side" aria-label="Audit signals">
+          <div class="panel">
+            <div class="panel-head"><span>signals</span><span>audit fit</span></div>
+            <div class="panel-body">
+              <div class="signal-list">
+                <div class="signal">
+                  <strong>Work keeps routing back to the same people.</strong>
+                  <span>The system depends on memory, status checks, or private context.</span>
+                </div>
+                <div class="signal">
+                  <strong>Records exist, but nobody fully trusts them.</strong>
+                  <span>Fields, stages, owners, and next actions need repair.</span>
+                </div>
+                <div class="signal">
+                  <strong>Automation runs until the first edge case.</strong>
+                  <span>There are no clear fallbacks, alerts, or exception paths.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="audit-box">
+            <h3>Start with a 30-minute systems audit.</h3>
+            <p>Bring the messy process, tool stack, and recurring failure points. Leave with a clear first-fix map.</p>
+            <a class="button dark" href="#contact">Open the intake</a>
+            <small>No pitch deck. Just diagnosis.</small>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="divider shell"></div>
+
+    <section class="shell" id="diagnostics">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Diagnostics</div>
+          <h2>Most operational problems show up as repeat symptoms.</h2>
+          <p>The audit looks for where the same issue keeps reappearing, then traces it back to the missing structure underneath.</p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <article class="card">
+          <div class="card-body">
+            <span class="label">Visibility</span>
+            <h3>No one can see the real status fast enough.</h3>
+            <p>Pipelines, tasks, and owner fields are repaired so the next action is obvious without a meeting.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <span class="label">Reliability</span>
+            <h3>The process works only when someone babysits it.</h3>
+            <p>Workflow logic gets fallback paths, checks, alerts, and escalation rules so failure becomes visible.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <span class="label">Memory</span>
+            <h3>Important knowledge lives in scattered conversations.</h3>
+            <p>Decision rules, SOPs, and repeated explanations become durable operating references.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="divider shell"></div>
+
+    <section class="shell" id="outcomes">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Outcomes</div>
+          <h2>What changes after the repair work is done.</h2>
+          <p>The goal is not more software. The goal is less ambiguity, fewer preventable stalls, and tools your team can trust.</p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <article class="card">
+          <div class="card-body">
+            <span class="label">CRM</span>
+            <h3>A CRM that reflects the actual business.</h3>
+            <ul>
+              <li>Stages with clear entry and exit rules</li>
+              <li>Fields with one shared definition</li>
+              <li>Records clean enough to report on without manual cleanup</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <span class="label">Workflows</span>
+            <h3>Automation that survives real-world exceptions.</h3>
+            <ul>
+              <li>Failure points that surface quickly</li>
+              <li>Escalations for stalled or incomplete work</li>
+              <li>Logic that does not depend on one person's memory</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <span class="label">Documentation</span>
+            <h3>Knowledge that stays usable under pressure.</h3>
+            <ul>
+              <li>SOPs written around real decisions and edge cases</li>
+              <li>Fewer repeat questions routed to senior staff</li>
+              <li>Cleaner onboarding for new operators</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="dark-band" id="work">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Selected work</div>
+            <h2>System repair in practice.</h2>
+            <p>Representative project types, rewritten as standalone case patterns without personal portfolio references.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="case-card">
+            <span class="label">Service business</span>
+            <h3>CRM rebuild from lead capture through payment and delivery.</h3>
+            <p>A fragmented sales and service process was rebuilt into a single operating path with field structure, routing, booking, proposal, contract, payment, and after-sales follow-up.</p>
+            <div class="pill-row">
+              <span class="pill">CRM architecture</span>
+              <span class="pill">routing logic</span>
+              <span class="pill">payment workflow</span>
+              <span class="pill">QA checklist</span>
+            </div>
+          </article>
+          <article class="case-card">
+            <span class="label">Rental operations</span>
+            <h3>Dual-sided marketing and CRM engine for supply and demand.</h3>
+            <p>Two audience flows were organized into separate pipelines with campaign logic, lead source tracking, content operations, and consultation routing.</p>
+            <div class="pill-row">
+              <span class="pill">pipeline design</span>
+              <span class="pill">email operations</span>
+              <span class="pill">content workflow</span>
+              <span class="pill">reporting</span>
+            </div>
+          </article>
+          <article class="case-card">
+            <span class="label">Knowledge systems</span>
+            <h3>Processor and support workflows turned into decision systems.</h3>
+            <p>Scattered institutional knowledge became a structured reference layer tied to case types, exception paths, and resolution rules.</p>
+            <div class="pill-row">
+              <span class="pill">taxonomy</span>
+              <span class="pill">decision trees</span>
+              <span class="pill">SOPs</span>
+            </div>
+          </article>
+          <article class="case-card">
+            <span class="label">Field operations</span>
+            <h3>Estimator handoffs rebuilt for cleaner data capture.</h3>
+            <p>Appointment, reminder, submission, and escalation logic were rebuilt so field data made it back into the operating system reliably.</p>
+            <div class="pill-row">
+              <span class="pill">handoffs</span>
+              <span class="pill">SMS logic</span>
+              <span class="pill">data capture</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell" id="contact">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Audit intake</div>
+          <h2>Bring the place where the operation keeps breaking.</h2>
+          <p>The first conversation maps the symptoms, tools, owners, and handoffs so the repair path is clear.</p>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="panel-head"><span>quick context</span><span>start here</span></div>
+          <div class="contact-body">
+            <p>This is a good fit when the business has traction, but the operating layer is lagging behind the volume of work.</p>
+            <div class="note">Useful first message: what keeps breaking, which tools are involved, who gets pulled in, and what a calmer version would look like.</div>
+            <div class="contact-methods">
+              <a class="contact-method" href="mailto:hello@example.com?subject=Systems%20audit%20request">
+                <strong>Email</strong>
+                <span>hello@example.com</span>
+              </a>
+              <div class="contact-method">
+                <strong>Audit format</strong>
+                <span>30 minutes, remote, focused on diagnosis and first fixes.</span>
+              </div>
+              <div class="contact-method">
+                <strong>Best fit</strong>
+                <span>CRM cleanup, workflow automation, SOPs, handoffs, reporting, and tool cleanup.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <div class="panel-head"><span>diagnostic intake</span><span>standalone form</span></div>
+          <div class="contact-body">
+            <form id="auditForm">
+              <div>
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" placeholder="Your name" required>
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@company.com" required>
+              </div>
+              <div>
+                <label for="tools">Current tools</label>
+                <input id="tools" name="tools" type="text" placeholder="CRM, automation tools, docs, support tools">
+              </div>
+              <div>
+                <label for="need">Primary area</label>
+                <select id="need" name="need">
+                  <option>CRM cleanup or architecture</option>
+                  <option>Workflow automation</option>
+                  <option>Documentation, SOPs, or knowledge base</option>
+                  <option>General operations cleanup</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+              <div>
+                <label for="message">Where does it keep breaking?</label>
+                <textarea id="message" name="message" placeholder="Describe the recurring issue, handoff, or process that keeps pulling attention back." required></textarea>
+              </div>
+              <button class="button primary" type="submit">Prepare email draft</button>
+              <p class="form-note">This standalone version opens your email client instead of sending data through a third-party form.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell" aria-label="Final call to action">
+      <div class="cta-band">
+        <div>
+          <strong>Ready for cleaner operating logic?</strong>
+          <span>Start with the messy part. The first pass turns it into a practical repair map.</span>
+        </div>
+        <a class="button dark" href="#contact">Request the audit</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <div class="footer-line">
+      <span>© <span id="year"></span> Ops Repair Studio</span>
+      <span>Remote systems audits for growing teams</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var year = document.getElementById("year");
+      var form = document.getElementById("auditForm");
+      var toast = document.getElementById("toast");
+
+      year.textContent = new Date().getFullYear();
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.style.opacity = "1";
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(function () {
+          toast.style.opacity = "0";
+        }, 2600);
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+
+        var data = new FormData(form);
+        var subject = "Systems audit request";
+        var body = [
+          "Name: " + data.get("name"),
+          "Email: " + data.get("email"),
+          "Tools: " + (data.get("tools") || "Not specified"),
+          "Primary area: " + data.get("need"),
+          "",
+          "Where it keeps breaking:",
+          data.get("message")
+        ].join("\n");
+
+        window.location.href = "mailto:hello@example.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        showToast("Email draft prepared.");
+      });
+    })();
+  </script>
+</body>
+</html>
