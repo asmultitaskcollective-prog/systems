@@ -3,596 +3,1303 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AS Multi-task Collective | Systems Audit and Workflow Cleanup</title>
-  <meta name="description" content="CRM cleanup, workflow automation, and documentation systems for teams that need calmer operations and clearer execution.">
+  <title>AS Multi-task Collective — Systems Audit &amp; Workflow Repair</title>
+  <meta name="description" content="CRM cleanup, workflow automation, and documentation systems for growing teams that keep losing time to unclear records and brittle processes.">
   <meta name="robots" content="index, follow">
+  <meta property="og:title" content="AS Multi-task Collective — Systems Audit & Workflow Repair">
+  <meta property="og:description" content="We rebuild the practical layer behind sales, service, handoffs, and follow-up for teams with traction.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg: #f3f6f8;
-      --surface: #ffffff;
-      --surface-2: #e8eef3;
-      --ink: #121c26;
-      --muted: #5f6f7d;
-      --quiet: #8998a5;
-      --line: rgba(18, 28, 38, .12);
-      --line-strong: rgba(18, 28, 38, .22);
-      --accent: #2f86c8;
-      --accent-2: #d9e8f5;
-      --dark: #111923;
-      --dark-ink: #f4f8fb;
-      --max: 1120px;
-      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --hero-bg:   #0A1120;
+      --bg:        #F5F7FB;
+      --surface:   #FFFFFF;
+      --surface-2: #EDF1F7;
+      --ink:       #0D1B2A;
+      --ink-2:     #2A3D52;
+      --muted:     #576879;
+      --quiet:     #8898A8;
+      --line:      rgba(13,27,42,.09);
+      --line-md:   rgba(13,27,42,.16);
+      --accent:    #1762C0;
+      --accent-lt: #DCE9F8;
+      --accent-2:  #2070D8;
+      --green:     #16A34A;
+      --green-lt:  #DCFCE7;
+      --red:       #DC2626;
+      --red-lt:    #FEE2E2;
+      --amber:     #D97706;
+      --dark:      #0A1120;
+      --dark-2:    #111E30;
+      --dark-3:    #1A2B40;
+      --dark-ink:  #E2EBF4;
+      --dark-muted:#7A92A8;
+      --dark-line: rgba(255,255,255,.08);
+      --max:       1100px;
+      --r:         10px;
+      --sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; font-size: 16px; }
     body {
-      margin: 0;
       font-family: var(--sans);
       color: var(--ink);
-      background:
-        linear-gradient(180deg, rgba(47, 134, 200, .13), transparent 420px),
-        linear-gradient(90deg, rgba(17, 25, 35, .05), transparent 42%),
-        var(--bg);
+      background: var(--bg);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-
     a { color: inherit; text-decoration: none; }
-    .shell { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    ul { list-style: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; }
 
+    .shell { width: min(var(--max), calc(100% - 40px)); margin-inline: auto; }
+
+    /* ── SCROLL REVEAL ───────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .reveal.up { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: .08s; }
+    .reveal-d2 { transition-delay: .16s; }
+    .reveal-d3 { transition-delay: .24s; }
+
+    /* ── NAV ─────────────────────────────────────────────── */
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 10;
-      background: rgba(247, 248, 245, .9);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--line);
+      z-index: 100;
+      background: rgba(10,17,32,.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
     }
-
     .nav {
-      min-height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      min-height: 60px;
     }
-
     .brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-weight: 700;
-      letter-spacing: -.02em;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--dark-ink);
+      white-space: nowrap;
+      letter-spacing: -.01em;
     }
-
     .brand-mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      border-radius: 7px;
+      background: var(--accent);
       display: grid;
       place-items: center;
-      background:
-        radial-gradient(circle at center, #1f2c38 0 54%, transparent 55%),
-        conic-gradient(from 20deg, #dfe8ee, #2f86c8, #dfe8ee, #111923, #dfe8ee);
-      color: #58a6df;
       font-family: var(--mono);
-      font-size: 15px;
-      font-weight: 800;
-      box-shadow: inset 0 0 0 2px #0c1118, 0 2px 8px rgba(17, 25, 35, .18);
+      font-size: 11.5px;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: .03em;
+      flex-shrink: 0;
     }
-
     .nav-links {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      gap: 6px;
-      flex-wrap: wrap;
+      gap: 2px;
     }
-
     .nav-links a {
-      padding: 8px 12px;
+      padding: 7px 13px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(226,235,244,.65);
       border: 1px solid transparent;
-      border-radius: 8px;
-      color: var(--muted);
-      font-family: var(--mono);
-      font-size: 12px;
+      transition: color .14s, background .14s, border-color .14s;
     }
+    .nav-links a:hover { color: var(--dark-ink); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.08); }
+    .nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+      border-color: transparent !important;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--accent-2) !important; }
 
-    .nav-links a:hover { border-color: var(--line); color: var(--ink); background: rgba(255, 255, 255, .6); }
-    .nav-links .nav-cta { background: var(--dark); color: var(--dark-ink); border-color: var(--dark); }
-
-    .hero { padding: 72px 0 42px; }
+    /* ── HERO ────────────────────────────────────────────── */
+    .hero-wrap {
+      background: var(--hero-bg);
+      position: relative;
+      overflow: hidden;
+    }
+    /* dot grid */
+    .hero-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    /* blue glow */
+    .hero-wrap::after {
+      content: "";
+      position: absolute;
+      top: -100px;
+      left: -80px;
+      width: 600px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(23,98,192,.28) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 80px 0 72px;
+    }
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.22fr) minmax(300px, .78fr);
-      gap: 18px;
-      align-items: stretch;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+      gap: 20px;
+      align-items: center;
     }
-
-    .hero-main, .panel, .card, .contact-form, .contact-info {
-      background: rgba(255, 255, 255, .82);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: 0 16px 45px rgba(23, 32, 29, .06);
-    }
-
-    .hero-main { padding: clamp(28px, 5vw, 56px); }
-    .kicker {
+    .hero-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: var(--accent);
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #5BA3E0;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-bottom: 18px;
-    }
-
-    .kicker::before {
-      content: "";
-      width: 28px;
-      height: 1px;
-      background: var(--accent);
-    }
-
-    h1, h2, h3, p { margin-top: 0; }
-    h1 {
-      max-width: 780px;
-      font-size: clamp(42px, 7vw, 76px);
-      line-height: .95;
-      letter-spacing: -.055em;
       margin-bottom: 22px;
     }
-
-    .lead {
-      max-width: 670px;
-      color: #34413d;
-      font-size: clamp(18px, 2.2vw, 22px);
-      line-height: 1.45;
-      margin-bottom: 16px;
+    .hero-eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 1.5px;
+      background: currentColor;
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+    h1 {
+      font-size: clamp(38px, 5vw, 68px);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -.045em;
+      color: var(--dark-ink);
+      margin-bottom: 22px;
+    }
+    h1 em { font-style: normal; color: #5BA3E0; }
+    .hero-lead {
+      font-size: clamp(16px, 1.7vw, 18.5px);
+      color: rgba(226,235,244,.75);
+      line-height: 1.6;
+      max-width: 520px;
+      margin-bottom: 10px;
+    }
+    .hero-sub {
+      font-size: 14px;
+      color: rgba(226,235,244,.45);
+      max-width: 500px;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .hero-proof {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .proof-item {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(226,235,244,.4);
+      letter-spacing: .04em;
+    }
+    .proof-item strong {
+      display: block;
+      font-size: 22px;
+      font-weight: 700;
+      color: rgba(226,235,244,.85);
+      letter-spacing: -.02em;
+      margin-bottom: 2px;
+    }
+    .proof-divider {
+      width: 1px;
+      height: 32px;
+      background: rgba(255,255,255,.1);
     }
 
-    .sub {
-      max-width: 650px;
-      color: var(--muted);
-      font-size: 15px;
-      margin-bottom: 28px;
+    /* ops widget */
+    .ops-widget {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
     }
-
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
-    .button {
-      display: inline-flex;
+    .ops-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 16px;
+      background: rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .ops-dots { display: flex; gap: 6px; }
+    .ops-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .ops-dot-r { background: #EF4444; }
+    .ops-dot-y { background: #F59E0B; }
+    .ops-dot-g { background: #22C55E; }
+    .ops-tabs-bar {
+      display: flex;
+      gap: 4px;
+    }
+    .ops-tab {
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .06em;
+      color: rgba(226,235,244,.4);
+      transition: background .14s, color .14s;
+    }
+    .ops-tab.active-before { color: #FCA5A5; background: rgba(239,68,68,.15); }
+    .ops-tab.active-after  { color: #86EFAC; background: rgba(34,197,94,.12); }
+    .ops-panel { display: none; padding: 12px 14px; }
+    .ops-panel.visible { display: block; }
+    .ops-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 7px;
+      transition: background .12s;
+    }
+    .ops-row:hover { background: rgba(255,255,255,.04); }
+    .ops-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 42px;
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: 1px solid var(--line-strong);
+      font-size: 9px;
+      font-weight: 700;
       font-family: var(--mono);
-      font-size: 13px;
-      cursor: pointer;
-      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+      flex-shrink: 0;
+      margin-top: 1px;
     }
-
-    .button:hover { transform: translateY(-1px); }
-    .button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .button.secondary { background: #fff; color: var(--ink); }
-    .button.dark { background: #fff; color: var(--dark); border-color: #fff; }
-
-    .check-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .check-item {
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface-2);
-      color: #35423e;
-      font-size: 14px;
-    }
-
-    .check-item::before {
-      content: "OK";
-      display: inline-flex;
-      margin-right: 8px;
-      color: var(--accent);
+    .ops-icon-bad  { background: rgba(239,68,68,.18); color: #FCA5A5; }
+    .ops-icon-warn { background: rgba(245,158,11,.18); color: #FCD34D; }
+    .ops-icon-ok   { background: rgba(34,197,94,.15);  color: #86EFAC; }
+    .ops-text { flex: 1; }
+    .ops-text strong { display: block; font-size: 12.5px; font-weight: 500; color: rgba(226,235,244,.85); line-height: 1.3; }
+    .ops-text span   { font-size: 11px; color: rgba(226,235,244,.38); font-family: var(--mono); }
+    .ops-footer {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 14px;
+      border-top: 1px solid rgba(255,255,255,.07);
       font-family: var(--mono);
       font-size: 11px;
     }
-
-    .hero-side {
-      display: grid;
-      gap: 18px;
-      grid-template-rows: 1fr auto;
+    .ops-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
 
+    /* ── BUTTONS ─────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 22px;
+      min-height: 44px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--sans);
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: transform .14s ease, box-shadow .14s ease, background .14s ease, border-color .14s ease, color .14s ease;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(23,98,192,.35);
+    }
+    .btn-primary:hover { background: var(--accent-2); box-shadow: 0 4px 18px rgba(23,98,192,.4); }
+    .btn-outline {
+      background: rgba(255,255,255,.06);
+      color: rgba(226,235,244,.8);
+      border-color: rgba(255,255,255,.14);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.1); color: var(--dark-ink); border-color: rgba(255,255,255,.22); }
+    .btn-solid {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--line-md);
+    }
+    .btn-solid:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-dark {
+      background: var(--dark);
+      color: var(--dark-ink);
+    }
+    .btn-dark:hover { background: var(--dark-2); }
+    .btn-lg { min-height: 48px; padding: 12px 28px; font-size: 15px; }
+    .btn-full { width: 100%; justify-content: center; }
+
+    /* ── MARQUEE ─────────────────────────────────────────── */
+    .marquee-wrap {
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 0;
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+    .marquee-item {
+      padding: 0 28px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--quiet);
+      letter-spacing: .04em;
+      white-space: nowrap;
+      border-right: 1px solid var(--line);
+    }
+    .marquee-label {
+      padding: 0 20px 0 24px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-right: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SHARED SECTION STYLES ───────────────────────────── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.04em;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .section-desc {
+      font-size: 15.5px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 580px;
+    }
+    .section-head { margin-bottom: 36px; }
+
+    .divider { height: 1px; background: var(--line); }
+    section { padding: 72px 0; scroll-margin-top: 72px; }
+
+    /* grids */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+    /* cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: 0 1px 3px rgba(13,27,42,.04), 0 6px 24px rgba(13,27,42,.05);
+      overflow: hidden;
+      transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+    }
+    .card:hover {
+      box-shadow: 0 2px 6px rgba(13,27,42,.06), 0 16px 48px rgba(13,27,42,.09);
+      transform: translateY(-3px);
+      border-color: rgba(13,27,42,.14);
+    }
+    .card-body { padding: 24px; }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--accent-lt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .card-icon svg { color: var(--accent); }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--quiet);
+      background: var(--surface-2);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .card h3 {
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -.025em;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .card-list { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+    .card-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .card-list li::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    /* ── SIGNAL CARDS ────────────────────────────────────── */
+    .signal-card {
+      padding: 20px 22px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      border-left: 3px solid var(--accent);
+      transition: box-shadow .16s, transform .16s;
+    }
+    .signal-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(13,27,42,.08);
+    }
+    .signal-card strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin-bottom: 5px;
+    }
+    .signal-card p { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+
+    /* ── METHODOLOGY ─────────────────────────────────────── */
+    .method-band {
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .method-inner { padding: 48px 0; }
+    .method-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: start;
+      gap: 0;
+    }
+    .method-step { padding: 0 32px 0 0; }
+    .method-step:last-child { padding: 0; }
+    .step-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--accent-lt);
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .step-circle svg { color: var(--accent); }
+    .method-step h4 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .method-step p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+    .method-arrow {
+      padding: 0 20px;
+      color: var(--quiet);
+      font-size: 20px;
+      margin-top: 10px;
+      flex-shrink: 0;
+      align-self: start;
+    }
+
+    /* ── DARK BAND ───────────────────────────────────────── */
+    .dark-band {
+      background: var(--dark);
+      padding: 72px 0;
+    }
+    .dark-band h2 { color: var(--dark-ink); }
+    .dark-band .section-desc { color: var(--dark-muted); }
+    .dark-band .section-label { color: #5BA3E0; }
+
+    .case-card {
+      border: 1px solid var(--dark-line);
+      border-radius: var(--r);
+      padding: 26px;
+      background: rgba(255,255,255,.03);
+      transition: background .18s, border-color .18s, transform .18s;
+    }
+    .case-card:hover {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.14);
+      transform: translateY(-2px);
+    }
+    .case-card .tag {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.1);
+      color: var(--dark-muted);
+    }
+    .case-card h3 {
+      font-size: 18.5px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -.025em;
+      color: var(--dark-ink);
+      margin-bottom: 10px;
+    }
+    .case-card p {
+      font-size: 13.5px;
+      color: var(--dark-muted);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .pill {
+      padding: 3px 9px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 99px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--dark-muted);
+      letter-spacing: .03em;
+    }
+
+    /* ── DIFFERENCE SECTION ──────────────────────────────── */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .diff-col {
+      padding: 24px 26px;
+      border-radius: var(--r);
+    }
+    .diff-col-yes { background: var(--green-lt); border: 1px solid rgba(22,163,74,.2); }
+    .diff-col-no  { background: #FEF2F2;         border: 1px solid rgba(220,38,38,.16); }
+    .diff-col-head {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .diff-col-yes .diff-col-head { color: #15803D; }
+    .diff-col-no  .diff-col-head { color: #B91C1C; }
+    .diff-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .diff-col-yes .diff-icon { background: rgba(22,163,74,.15); }
+    .diff-col-no  .diff-icon { background: rgba(220,38,38,.12); }
+    .diff-list { display: flex; flex-direction: column; gap: 9px; }
+    .diff-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+    .diff-col-yes .diff-item { color: #1A5C30; }
+    .diff-col-no  .diff-item { color: #9B2020; }
+    .diff-item::before {
+      flex-shrink: 0;
+      font-weight: 700;
+      font-family: var(--mono);
+      font-size: 12px;
+      margin-top: 1px;
+    }
+    .diff-col-yes .diff-item::before { content: "✓"; color: var(--green); }
+    .diff-col-no  .diff-item::before { content: "✗"; color: var(--red); }
+
+    /* ── FAQ ─────────────────────────────────────────────── */
+    .faq-list { display: flex; flex-direction: column; gap: 8px; }
+    details.faq-item {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      overflow: hidden;
+      transition: box-shadow .16s;
+    }
+    details.faq-item[open] {
+      box-shadow: 0 4px 20px rgba(13,27,42,.07);
+      border-color: var(--accent);
+    }
+    details.faq-item summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -.01em;
+      cursor: pointer;
+      list-style: none;
+      transition: color .14s;
+    }
+    details.faq-item[open] summary { color: var(--accent); }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    .faq-chevron {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: var(--surface-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background .14s, transform .25s ease;
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--muted);
+    }
+    details.faq-item[open] .faq-chevron {
+      background: var(--accent-lt);
+      color: var(--accent);
+      transform: rotate(45deg);
+    }
+    .faq-body {
+      padding: 0 22px 18px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+
+    /* ── CONTACT ─────────────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 14px;
+    }
+    .contact-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: 0 1px 3px rgba(13,27,42,.04), 0 8px 32px rgba(13,27,42,.05);
+      overflow: hidden;
+    }
     .panel-head {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
-      padding: 12px 14px;
+      align-items: center;
+      padding: 11px 18px;
       border-bottom: 1px solid var(--line);
-      color: var(--quiet);
       font-family: var(--mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-
-    .panel-body { padding: 16px; }
-    .signal-list { display: grid; gap: 10px; }
-    .signal {
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-    }
-
-    .signal strong { display: block; margin-bottom: 4px; font-size: 14px; }
-    .signal span { color: var(--muted); font-size: 13px; }
-
-    .audit-box {
-      background: var(--dark);
-      color: var(--dark-ink);
-      border-radius: 8px;
-      padding: 22px;
-    }
-
-    .audit-box h3 { font-size: 22px; line-height: 1.15; margin-bottom: 10px; }
-    .audit-box p { color: #b8c7c2; font-size: 14px; margin-bottom: 16px; }
-    .audit-box small { display: block; color: #8da09a; font-family: var(--mono); text-align: center; margin-top: 10px; }
-
-    section { padding: 58px 0; scroll-margin-top: 82px; }
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-
-    h2 {
-      max-width: 720px;
-      font-size: clamp(30px, 4vw, 48px);
-      line-height: 1;
-      letter-spacing: -.045em;
-      margin-bottom: 10px;
-    }
-
-    .section-head p { max-width: 650px; color: var(--muted); margin-bottom: 0; }
-    .divider { height: 1px; background: var(--line); }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-
-    .card { overflow: hidden; }
-    .card-body { padding: 22px; }
-    .label {
-      display: inline-flex;
-      margin-bottom: 14px;
-      padding: 4px 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
+      font-size: 10.5px;
+      font-weight: 500;
       color: var(--quiet);
+      letter-spacing: .08em;
+      text-transform: uppercase;
       background: var(--surface-2);
-      font-family: var(--mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .08em;
     }
+    .panel-body { padding: 24px; }
+    .panel-body > p { font-size: 14.5px; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
 
-    .card h3 { font-size: 21px; line-height: 1.18; letter-spacing: -.02em; margin-bottom: 10px; }
-    .card p, .card li { color: var(--muted); font-size: 14px; }
-    ul { padding-left: 18px; margin: 0; }
-    li + li { margin-top: 7px; }
-    li::marker { color: var(--accent); }
-
-    .dark-band {
-      background: var(--dark);
-      color: var(--dark-ink);
-      padding: 58px 0;
-      margin: 30px 0;
-    }
-
-    .dark-band .section-head p { color: #b8c7c2; }
-    .case-card {
-      border: 1px solid rgba(239, 245, 242, .14);
-      border-radius: 8px;
-      padding: 22px;
-      background: rgba(255, 255, 255, .045);
-    }
-
-    .case-card h3 { font-size: 21px; line-height: 1.22; margin-bottom: 10px; }
-    .case-card p { color: #b8c7c2; font-size: 14px; }
-    .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
-    .pill {
-      padding: 4px 8px;
-      border: 1px solid rgba(239, 245, 242, .16);
-      border-radius: 999px;
-      color: #b8c7c2;
-      font-family: var(--mono);
-      font-size: 11px;
-    }
-
-    .contact-grid { display: grid; grid-template-columns: .88fr 1.12fr; gap: 14px; }
-    .contact-info, .contact-form { overflow: hidden; }
-    .contact-body { padding: 22px; }
     .note {
-      border-left: 3px solid var(--accent-2);
-      background: rgba(216, 139, 31, .1);
-      padding: 14px;
+      border-left: 3px solid var(--accent);
+      background: var(--accent-lt);
+      padding: 13px 16px;
       border-radius: 0 8px 8px 0;
-      color: #4e4638;
-      font-size: 14px;
-      margin: 18px 0;
+      font-size: 13.5px;
+      color: #1A3C6E;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
 
-    .contact-methods { display: grid; gap: 10px; }
+    .contact-methods { display: flex; flex-direction: column; gap: 8px; }
     .contact-method {
-      padding: 14px;
+      padding: 13px 16px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--surface-2);
+      transition: border-color .14s, transform .14s;
     }
+    .contact-method:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .contact-method strong { display: block; font-size: 13.5px; font-weight: 600; margin-bottom: 3px; }
+    .contact-method span { font-size: 13px; color: var(--muted); }
 
-    .contact-method strong { display: block; margin-bottom: 4px; }
-    .contact-method span { color: var(--muted); font-size: 14px; }
-
-    form { display: grid; gap: 12px; }
-    label {
+    /* form */
+    form { display: flex; flex-direction: column; gap: 14px; }
+    .field label {
       display: block;
-      margin-bottom: 5px;
-      color: var(--quiet);
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--quiet);
       letter-spacing: .08em;
       text-transform: uppercase;
+      margin-bottom: 5px;
     }
-
     input, select, textarea {
       width: 100%;
-      border: 1px solid var(--line);
+      border: 1.5px solid var(--line-md);
       border-radius: 8px;
-      background: #fff;
+      background: var(--surface-2);
       color: var(--ink);
       font: inherit;
-      padding: 11px 12px;
+      font-size: 14px;
+      padding: 10px 14px;
       outline: none;
+      transition: border-color .14s, box-shadow .14s, background .14s;
+      -webkit-appearance: none;
     }
-
+    input::placeholder, textarea::placeholder { color: var(--quiet); }
     input:focus, select:focus, textarea:focus {
+      background: #fff;
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(47, 134, 200, .14);
+      box-shadow: 0 0 0 3.5px rgba(23,98,192,.1);
+    }
+    textarea { min-height: 118px; resize: vertical; }
+    .form-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-note {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--quiet);
+      text-align: center;
+      line-height: 1.5;
     }
 
-    textarea { min-height: 132px; resize: vertical; }
-    .form-note { margin: 4px 0 0; color: var(--quiet); font-family: var(--mono); font-size: 11px; text-align: center; }
-
+    /* ── CTA BAND ────────────────────────────────────────── */
     .cta-band {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 20px;
-      border-radius: 8px;
+      gap: 24px;
       background: var(--dark);
-      color: var(--dark-ink);
-      padding: 24px;
-      margin-bottom: 38px;
+      border-radius: 14px;
+      padding: 32px 36px;
+      margin-bottom: 52px;
+      border: 1px solid rgba(255,255,255,.06);
     }
+    .cta-band-text strong {
+      display: block;
+      font-size: clamp(18px, 2.2vw, 24px);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: var(--dark-ink);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .cta-band-text span { font-size: 14px; color: var(--dark-muted); }
 
-    .cta-band strong { display: block; font-size: 22px; line-height: 1.2; margin-bottom: 5px; }
-    .cta-band span { color: #b8c7c2; font-size: 14px; }
-
+    /* ── FOOTER ──────────────────────────────────────────── */
     footer {
       border-top: 1px solid var(--line);
-      padding: 26px 0 38px;
-      color: var(--quiet);
+      padding: 24px 0 40px;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink-2);
+    }
+    .footer-brand-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: var(--dark);
+      display: grid;
+      place-items: center;
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: 9.5px;
+      color: #5BA3E0;
+    }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      padding: 5px 10px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--quiet);
+      border-radius: 5px;
+      transition: color .14s, background .14s;
+    }
+    .footer-links a:hover { color: var(--ink); background: var(--surface-2); }
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--quiet);
     }
 
-    .footer-line { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    /* ── TOAST ───────────────────────────────────────────── */
     .toast {
       position: fixed;
       left: 50%;
-      bottom: 20px;
-      transform: translateX(-50%);
+      bottom: 28px;
+      transform: translateX(-50%) translateY(8px);
       background: var(--dark);
       color: var(--dark-ink);
-      border-radius: 999px;
-      padding: 8px 14px;
+      border-radius: 99px;
+      padding: 10px 20px;
       font-family: var(--mono);
       font-size: 12px;
+      letter-spacing: .03em;
       opacity: 0;
       pointer-events: none;
-      transition: opacity .2s ease;
+      transition: opacity .22s ease, transform .22s ease;
+      white-space: nowrap;
+      z-index: 999;
+      border: 1px solid rgba(255,255,255,.1);
     }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+    /* back to top */
+    .back-top {
+      position: fixed;
+      right: 24px;
+      bottom: 28px;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--dark);
+      color: var(--dark-ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,.1);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      transform: translateY(4px);
+      cursor: pointer;
+      z-index: 99;
+    }
+    .back-top.show { opacity: 1; pointer-events: auto; transform: none; }
+    .back-top:hover { background: var(--dark-2); }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
     @media (max-width: 900px) {
-      .hero-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-grid, .contact-grid, .diff-grid { grid-template-columns: 1fr; }
       .grid-3, .grid-2 { grid-template-columns: 1fr; }
-      .check-list { grid-template-columns: 1fr; }
-      .section-head, .cta-band { align-items: flex-start; flex-direction: column; }
+      .method-row { grid-template-columns: 1fr; gap: 24px; }
+      .method-arrow { display: none; }
+      .method-step { padding: 0; }
+      .cta-band { flex-direction: column; align-items: flex-start; padding: 24px; }
     }
-
-    @media (max-width: 640px) {
-      .nav { align-items: flex-start; flex-direction: column; padding: 12px 0; }
-      .nav-links { justify-content: flex-start; }
-      .hero { padding-top: 44px; }
-      h1 { font-size: clamp(38px, 13vw, 54px); }
+    @media (max-width: 600px) {
+      .nav { flex-direction: column; align-items: flex-start; padding: 12px 0; min-height: auto; gap: 10px; }
+      .hero { padding: 52px 0 56px; }
+      h1 { letter-spacing: -.035em; }
+      .hero-proof { gap: 14px; }
+      .ops-widget { margin-top: 24px; }
     }
   </style>
 </head>
 <body id="top">
+
+  <!-- NAV -->
   <header class="topbar">
-    <nav class="nav shell" aria-label="Primary navigation">
+    <nav class="nav shell" aria-label="Main navigation">
       <a class="brand" href="#top" aria-label="AS Multi-task Collective home">
-        <span class="brand-mark">AS</span>
-        <span>AS Multi-task Collective</span>
+        <span class="brand-mark" aria-hidden="true">AS</span>
+        AS Multi-task Collective
       </a>
       <div class="nav-links">
-        <a href="#diagnostics">Diagnostics</a>
-        <a href="#outcomes">Outcomes</a>
+        <a href="#signals">Signals</a>
+        <a href="#services">Services</a>
         <a href="#work">Work</a>
-        <a class="nav-cta" href="#contact">Request audit</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="nav-cta">Request audit</a>
       </div>
     </nav>
   </header>
 
   <main>
-    <section class="hero shell" id="hero">
-      <div class="hero-grid">
-        <div class="hero-main">
-          <div class="kicker">Technical builder for CRM, automation, and operating systems</div>
-          <h1>Quiet the messy parts of a growing operation.</h1>
-          <p class="lead">AS Multi-task Collective rebuilds the practical layer behind sales, service, handoffs, documentation, and follow-up.</p>
-          <p class="sub">The work is for teams that already have customers, tools, and momentum, but keep losing time to unclear records, brittle workflows, repeated questions, and manual cleanup.</p>
-          <div class="actions">
-            <a class="button primary" href="#contact">Request a systems audit</a>
-            <a class="button secondary" href="#outcomes">See what gets fixed</a>
-          </div>
-          <div class="check-list" aria-label="Common fixes">
-            <div class="check-item">CRM stages that match real operating states</div>
-            <div class="check-item">Automation with fallbacks and visible failure points</div>
-            <div class="check-item">SOPs and decision paths people can actually use</div>
-            <div class="check-item">Cleaner handoffs between sales, service, and admin</div>
-          </div>
-        </div>
 
-        <aside class="hero-side" aria-label="Audit signals">
-          <div class="panel">
-            <div class="panel-head"><span>signals</span><span>audit fit</span></div>
-            <div class="panel-body">
-              <div class="signal-list">
-                <div class="signal">
-                  <strong>Work keeps routing back to the same people.</strong>
-                  <span>The system depends on memory, status checks, or private context.</span>
-                </div>
-                <div class="signal">
-                  <strong>Records exist, but nobody fully trusts them.</strong>
-                  <span>Fields, stages, owners, and next actions need repair.</span>
-                </div>
-                <div class="signal">
-                  <strong>Automation runs until the first edge case.</strong>
-                  <span>There are no clear fallbacks, alerts, or exception paths.</span>
-                </div>
+    <!-- HERO -->
+    <div class="hero-wrap">
+      <section class="hero shell" id="hero">
+        <div class="hero-grid">
+
+          <!-- Left: copy -->
+          <div class="hero-copy">
+            <div class="hero-eyebrow">CRM · Automation · Operations</div>
+            <h1>Quiet the <em>messy parts</em> of a growing operation.</h1>
+            <p class="hero-lead">AS Multi-task Collective rebuilds the practical layer behind sales, service, handoffs, documentation, and follow-up.</p>
+            <p class="hero-sub">For teams that already have customers, tools, and momentum — but keep losing time to unclear records, brittle workflows, repeated questions, and manual cleanup.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-lg" href="#contact">Request a systems audit</a>
+              <a class="btn btn-outline btn-lg" href="#services">See what gets fixed</a>
+            </div>
+            <div class="hero-proof" role="list" aria-label="Key stats">
+              <div class="proof-item" role="listitem">
+                <strong>30 min</strong>first audit session
+              </div>
+              <div class="proof-divider" aria-hidden="true"></div>
+              <div class="proof-item" role="listitem">
+                <strong>3 steps</strong>audit → map → build
+              </div>
+              <div class="proof-divider" aria-hidden="true"></div>
+              <div class="proof-item" role="listitem">
+                <strong>0 new tools</strong>built in what you have
               </div>
             </div>
           </div>
 
-          <div class="audit-box">
-            <h3>Start with a 30-minute systems audit.</h3>
-            <p>Bring the messy process, tool stack, and recurring failure points. Leave with a clear first-fix map.</p>
-            <a class="button dark" href="#contact">Open the intake</a>
-            <small>No pitch deck. Just diagnosis.</small>
+          <!-- Right: ops status widget -->
+          <div class="ops-widget" role="region" aria-label="Operations status comparison">
+            <div class="ops-bar">
+              <div class="ops-dots" aria-hidden="true">
+                <span class="ops-dot ops-dot-r"></span>
+                <span class="ops-dot ops-dot-y"></span>
+                <span class="ops-dot ops-dot-g"></span>
+              </div>
+              <div class="ops-tabs-bar" role="tablist">
+                <button class="ops-tab active-before" id="tab-before" role="tab" aria-selected="true" aria-controls="panel-before">Before</button>
+                <button class="ops-tab" id="tab-after"  role="tab" aria-selected="false" aria-controls="panel-after">After repair</button>
+              </div>
+            </div>
+
+            <!-- BEFORE -->
+            <div class="ops-panel visible" id="panel-before" role="tabpanel" aria-labelledby="tab-before">
+              <div class="ops-row">
+                <div class="ops-icon ops-icon-bad" aria-label="Problem">!</div>
+                <div class="ops-text"><strong>CRM stage ownership</strong><span>Unknown / inconsistent</span></div>
+              </div>
+              <div class="ops-row">
+                <div class="ops-icon ops-icon-bad" aria-label="Problem">✗</div>
+                <div class="ops-text"><strong>Automation coverage</strong><span>Breaks at first edge case</span></div>
+              </div>
+              <div class="ops-row">
+                <div class="ops-icon ops-icon-warn" aria-label="Warning">~</div>
+                <div class="ops-text"><strong>Handoff process</strong><span>Manual follow-up required</span></div>
+              </div>
+              <div class="ops-row">
+                <div class="ops-icon ops-icon-bad" aria-label="Problem">✗</div>
+                <div class="ops-text"><strong>SOP / knowledge base</strong><span>Scattered across messages</span></div>
+              </div>
+              <div class="ops-row">
+                <div class="ops-icon ops-icon-bad" aria-label="Problem">!</div>
+                <div class="ops-text"><strong>Recurring escalations</strong><span>4 open, same root cause</span></div>
+              </div>
+              <div class="ops-footer" style="color:rgba(252,165,165,.7)">
+                <span class="ops-status-dot" style="background:#EF4444" aria-hidden="true"></span>
+                3 structural gaps identified
+              </div>
+            </div>
+
+            <!-- AFTER -->
+            <div class="ops-panel" id="panel-after" role="tabpanel" aria-labelledby="tab-after">
+              <div class="ops-row">
+                <div class="ops-icon ops-icon-ok" aria-label="Fixed">✓</div>
+                <div class="ops-text"><strong>CRM pipeline logic</strong><span>Rebuilt with clear entry/exit rules</span></div>
+              </div>
+              <div class="ops-row">
+                <div class="ops-icon ops-icon-ok" aria-label="Fixed">✓</div>
+                <div class="ops-text"><strong>Automation fallbacks</strong><span>3 workflows active with alerts</span></div>
+              </div>
+              <div class="ops-row">
+                <div class="ops-icon ops-icon-ok" aria-label="Fixed">✓</div>
+                <div class="ops-text"><strong>Handoff triggers</strong><span>Configured, no manual steps</span></div>
+              </div>
+              <div class="ops-row">
+                <div class="ops-icon ops-icon-ok" aria-label="Fixed">✓</div>
+                <div class="ops-text"><strong>SOP library</strong><span>12 documents, tied to case types</span></div>
+              </div>
+              <div class="ops-row">
+                <div class="ops-icon ops-icon-ok" aria-label="Fixed">✓</div>
+                <div class="ops-text"><strong>Recurring escalations</strong><span>Root cause resolved</span></div>
+              </div>
+              <div class="ops-footer" style="color:rgba(134,239,172,.7)">
+                <span class="ops-status-dot" style="background:#22C55E" aria-hidden="true"></span>
+                All systems operational
+              </div>
+            </div>
           </div>
-        </aside>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- TOOL MARQUEE -->
+    <div class="marquee-wrap" aria-label="Tools we work in" role="region">
+      <div class="marquee-track" aria-hidden="true">
+        <!-- set 1 -->
+        <span class="marquee-label">Works in</span>
+        <span class="marquee-item">GoHighLevel</span>
+        <span class="marquee-item">HubSpot</span>
+        <span class="marquee-item">Salesforce</span>
+        <span class="marquee-item">Pipedrive</span>
+        <span class="marquee-item">Zapier</span>
+        <span class="marquee-item">Make</span>
+        <span class="marquee-item">Airtable</span>
+        <span class="marquee-item">Notion</span>
+        <span class="marquee-item">ClickUp</span>
+        <span class="marquee-item">Monday.com</span>
+        <span class="marquee-item">ActiveCampaign</span>
+        <span class="marquee-item">Zendesk</span>
+        <span class="marquee-item">Intercom</span>
+        <span class="marquee-item">Slack</span>
+        <span class="marquee-item">Google Workspace</span>
+        <!-- set 2 (duplicate for seamless loop) -->
+        <span class="marquee-label">Works in</span>
+        <span class="marquee-item">GoHighLevel</span>
+        <span class="marquee-item">HubSpot</span>
+        <span class="marquee-item">Salesforce</span>
+        <span class="marquee-item">Pipedrive</span>
+        <span class="marquee-item">Zapier</span>
+        <span class="marquee-item">Make</span>
+        <span class="marquee-item">Airtable</span>
+        <span class="marquee-item">Notion</span>
+        <span class="marquee-item">ClickUp</span>
+        <span class="marquee-item">Monday.com</span>
+        <span class="marquee-item">ActiveCampaign</span>
+        <span class="marquee-item">Zendesk</span>
+        <span class="marquee-item">Intercom</span>
+        <span class="marquee-item">Slack</span>
+        <span class="marquee-item">Google Workspace</span>
+      </div>
+    </div>
+
+    <!-- SIGNALS / FIT CHECK -->
+    <section class="shell" id="signals">
+      <div class="section-head reveal">
+        <div class="section-label">Fit check</div>
+        <h2>Three signals this is the right conversation.</h2>
+        <p class="section-desc">If any of these are recurring — not just occasional — the issue is structural, not operational.</p>
+      </div>
+      <div class="grid-3">
+        <div class="signal-card reveal reveal-d1">
+          <strong>Work keeps routing back to the same two people.</strong>
+          <p>The system depends on memory, private context, or a specific person being available. When they're not, things stall or get missed.</p>
+        </div>
+        <div class="signal-card reveal reveal-d2">
+          <strong>Records exist, but nobody fully trusts them.</strong>
+          <p>The CRM has data but the team doesn't rely on it for decisions. Fields are outdated, stages don't reflect reality, owners are wrong.</p>
+        </div>
+        <div class="signal-card reveal reveal-d3">
+          <strong>Automation works until the first exception.</strong>
+          <p>Workflows run fine in the happy path. The moment something unusual happens, there's no fallback — just a missed step and a manual fix.</p>
+        </div>
       </div>
     </section>
 
-    <div class="divider shell"></div>
-
-    <section class="shell" id="diagnostics">
-      <div class="section-head">
-        <div>
-          <div class="kicker">Diagnostics</div>
-          <h2>Most operational problems show up as repeat symptoms.</h2>
-          <p>The audit looks for where the same issue keeps reappearing, then traces it back to the missing structure underneath.</p>
+    <!-- METHODOLOGY -->
+    <div class="method-band">
+      <div class="shell method-inner">
+        <div class="section-head reveal" style="margin-bottom:32px">
+          <div class="section-label">Approach</div>
+          <h2>Three steps. No slide decks.</h2>
+        </div>
+        <div class="method-row">
+          <div class="method-step reveal reveal-d1">
+            <div class="step-num">Step 01</div>
+            <div class="step-circle" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </div>
+            <h4>Audit</h4>
+            <p>30 minutes. Focused on symptoms, tools, who gets pulled in to fix recurring issues, and what a calmer version would look like. Not a sales call — a diagnosis.</p>
+          </div>
+          <div class="method-arrow" aria-hidden="true">→</div>
+          <div class="method-step reveal reveal-d2">
+            <div class="step-num">Step 02</div>
+            <div class="step-circle" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+            </div>
+            <h4>Map</h4>
+            <p>A working repair document — prioritized by impact, written around your specific tools and team structure. The first thing to fix is always clear before any build work starts.</p>
+          </div>
+          <div class="method-arrow" aria-hidden="true">→</div>
+          <div class="method-step reveal reveal-d3">
+            <div class="step-num">Step 03</div>
+            <div class="step-circle" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h4>Build</h4>
+            <p>Hands-on implementation inside your existing tools. Documented so the team can maintain it. Tested against real edge cases before handoff.</p>
+          </div>
         </div>
       </div>
-
-      <div class="grid-3">
-        <article class="card">
-          <div class="card-body">
-            <span class="label">Visibility</span>
-            <h3>No one can see the real status fast enough.</h3>
-            <p>Pipelines, tasks, and owner fields are repaired so the next action is obvious without a meeting.</p>
-          </div>
-        </article>
-        <article class="card">
-          <div class="card-body">
-            <span class="label">Reliability</span>
-            <h3>The process works only when someone babysits it.</h3>
-            <p>Workflow logic gets fallback paths, checks, alerts, and escalation rules so failure becomes visible.</p>
-          </div>
-        </article>
-        <article class="card">
-          <div class="card-body">
-            <span class="label">Memory</span>
-            <h3>Important knowledge lives in scattered conversations.</h3>
-            <p>Decision rules, SOPs, and repeated explanations become durable operating references.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+    </div>
 
     <div class="divider shell"></div>
 
-    <section class="shell" id="outcomes">
-      <div class="section-head">
-        <div>
-          <div class="kicker">Outcomes</div>
-          <h2>What changes after the repair work is done.</h2>
-          <p>The goal is not more software. The goal is less ambiguity, fewer preventable stalls, and tools your team can trust.</p>
-        </div>
+    <!-- SERVICES -->
+    <section class="shell" id="services">
+      <div class="section-head reveal">
+        <div class="section-label">Services</div>
+        <h2>What gets built.</h2>
+        <p class="section-desc">The work covers three areas. Most engagements touch more than one — because the problems usually cross the same boundaries.</p>
       </div>
-
       <div class="grid-3">
-        <article class="card">
+        <article class="card reveal reveal-d1">
           <div class="card-body">
-            <span class="label">CRM</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <span class="tag">CRM</span>
             <h3>A CRM that reflects the actual business.</h3>
-            <ul>
-              <li>Stages with clear entry and exit rules</li>
-              <li>Fields with one shared definition</li>
-              <li>Records clean enough to report on without manual cleanup</li>
+            <p>Pipeline stages rebuilt around how deals and clients actually move. Fields with shared definitions. Records clean enough to trust for reporting.</p>
+            <ul class="card-list">
+              <li>Stage logic with clear entry and exit criteria</li>
+              <li>Field structure and ownership rules</li>
+              <li>Record cleanup and deduplication</li>
+              <li>Reporting that doesn't need manual prep</li>
             </ul>
           </div>
         </article>
-        <article class="card">
+        <article class="card reveal reveal-d2">
           <div class="card-body">
-            <span class="label">Workflows</span>
-            <h3>Automation that survives real-world exceptions.</h3>
-            <ul>
-              <li>Failure points that surface quickly</li>
-              <li>Escalations for stalled or incomplete work</li>
-              <li>Logic that does not depend on one person's memory</li>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+            </div>
+            <span class="tag">Automation</span>
+            <h3>Workflows that survive real-world exceptions.</h3>
+            <p>Automation with fallback paths, alert rules, and escalation logic. Failure becomes visible before it becomes a client problem.</p>
+            <ul class="card-list">
+              <li>Fallback paths for every edge case</li>
+              <li>Escalation for stalled or incomplete work</li>
+              <li>Logic that doesn't depend on one person's memory</li>
+              <li>Documented so the next person can maintain it</li>
             </ul>
           </div>
         </article>
-        <article class="card">
+        <article class="card reveal reveal-d3">
           <div class="card-body">
-            <span class="label">Documentation</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <span class="tag">Documentation</span>
             <h3>Knowledge that stays usable under pressure.</h3>
-            <ul>
-              <li>SOPs written around real decisions and edge cases</li>
-              <li>Fewer repeat questions routed to senior staff</li>
-              <li>Cleaner onboarding for new operators</li>
+            <p>SOPs built around real decisions and edge cases — not generic templates. A reference layer the team can actually find, read, and update.</p>
+            <ul class="card-list">
+              <li>Decision trees for recurring case types</li>
+              <li>Escalation paths with clear ownership</li>
+              <li>Fewer repeat questions to senior staff</li>
+              <li>Onboarding material that reflects reality</li>
             </ul>
           </div>
         </article>
       </div>
     </section>
 
+    <!-- WORK -->
     <section class="dark-band" id="work">
       <div class="shell">
-        <div class="section-head">
-          <div>
-          <div class="kicker">Selected work</div>
+        <div class="section-head reveal">
+          <div class="section-label">Selected work</div>
           <h2>System repair in practice.</h2>
-            <p>Representative project types, framed around the collective's systems work without personal portfolio references.</p>
-          </div>
+          <p class="section-desc">Representative project types from across the collective's engagements. Details kept general to respect confidentiality.</p>
         </div>
-
         <div class="grid-2">
-          <article class="case-card">
-            <span class="label">Service business</span>
-            <h3>CRM rebuild from lead capture through payment and delivery.</h3>
-            <p>A fragmented sales and service process was rebuilt into a single operating path with field structure, routing, booking, proposal, contract, payment, and after-sales follow-up.</p>
+          <article class="case-card reveal reveal-d1">
+            <span class="tag">Service business</span>
+            <h3>Full CRM rebuild from lead capture through payment and delivery.</h3>
+            <p>A fragmented sales and service process rebuilt into a single operating path — routing, booking, proposal, contract, payment, and after-sales follow-up in documented sequence. The team stopped re-entering data between stages.</p>
             <div class="pill-row">
               <span class="pill">CRM architecture</span>
               <span class="pill">routing logic</span>
@@ -600,10 +1307,10 @@
               <span class="pill">QA checklist</span>
             </div>
           </article>
-          <article class="case-card">
-            <span class="label">Rental operations</span>
+          <article class="case-card reveal reveal-d2">
+            <span class="tag">Rental operations</span>
             <h3>Dual-sided marketing and CRM engine for supply and demand.</h3>
-            <p>Two audience flows were organized into separate pipelines with campaign logic, lead source tracking, content operations, and consultation routing.</p>
+            <p>Two audience flows organized into separate pipelines with campaign logic, lead source tracking, content operations calendar, and consultation routing. Both sides of the market managed without crossing wires.</p>
             <div class="pill-row">
               <span class="pill">pipeline design</span>
               <span class="pill">email operations</span>
@@ -611,159 +1318,300 @@
               <span class="pill">reporting</span>
             </div>
           </article>
-          <article class="case-card">
-            <span class="label">Knowledge systems</span>
-            <h3>Processor and support workflows turned into decision systems.</h3>
-            <p>Scattered institutional knowledge became a structured reference layer tied to case types, exception paths, and resolution rules.</p>
+          <article class="case-card reveal reveal-d3">
+            <span class="tag">Knowledge systems</span>
+            <h3>Processor workflows turned into decision systems.</h3>
+            <p>Scattered institutional knowledge became a structured reference layer tied to case types, exception paths, and resolution rules. New operators onboard without requiring a dedicated trainer for each scenario.</p>
             <div class="pill-row">
               <span class="pill">taxonomy</span>
               <span class="pill">decision trees</span>
               <span class="pill">SOPs</span>
+              <span class="pill">knowledge base</span>
             </div>
           </article>
-          <article class="case-card">
-            <span class="label">Field operations</span>
-            <h3>Estimator handoffs rebuilt for cleaner data capture.</h3>
-            <p>Appointment, reminder, submission, and escalation logic were rebuilt so field data made it back into the operating system reliably.</p>
+          <article class="case-card reveal">
+            <span class="tag">Field operations</span>
+            <h3>Estimator handoffs rebuilt for clean data capture end-to-end.</h3>
+            <p>Appointment, reminder, submission, and escalation logic rebuilt so field data made it back into the operating system reliably — without manual re-entry or follow-up Slack messages to chase completion.</p>
             <div class="pill-row">
-              <span class="pill">handoffs</span>
-              <span class="pill">SMS logic</span>
+              <span class="pill">handoff logic</span>
+              <span class="pill">SMS automation</span>
               <span class="pill">data capture</span>
+              <span class="pill">escalation rules</span>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="shell" id="contact">
-      <div class="section-head">
-        <div>
-          <div class="kicker">Audit intake</div>
-          <h2>Bring the place where the operation keeps breaking.</h2>
-          <p>The first conversation maps the symptoms, tools, owners, and handoffs so the repair path is clear.</p>
+    <!-- WHAT THIS IS / ISN'T -->
+    <section class="shell">
+      <div class="section-head reveal">
+        <div class="section-label">Expectations</div>
+        <h2>What this is. What it isn't.</h2>
+        <p class="section-desc">Worth being direct about both, so the first conversation isn't spent on alignment.</p>
+      </div>
+      <div class="diff-grid reveal">
+        <div class="diff-col diff-col-yes">
+          <div class="diff-col-head">
+            <span class="diff-icon">✓</span>
+            What this is
+          </div>
+          <div class="diff-list">
+            <div class="diff-item">Hands-on build work inside tools you already have</div>
+            <div class="diff-item">A diagnosis before any work begins</div>
+            <div class="diff-item">Systems documented so the team can own them after</div>
+            <div class="diff-item">Repair prioritized by actual business impact</div>
+            <div class="diff-item">Work that treats edge cases as requirements, not afterthoughts</div>
+            <div class="diff-item">Clear on what's out of scope and why</div>
+          </div>
+        </div>
+        <div class="diff-col diff-col-no">
+          <div class="diff-col-head">
+            <span class="diff-icon">✗</span>
+            What it isn't
+          </div>
+          <div class="diff-list">
+            <div class="diff-item">A strategy deck with no implementation</div>
+            <div class="diff-item">A pitch for new tools or platforms</div>
+            <div class="diff-item">Ongoing management or retainer-first engagement</div>
+            <div class="diff-item">Work that requires rebuilding from scratch when a fix will do</div>
+            <div class="diff-item">A service that creates dependency instead of capability</div>
+            <div class="diff-item">Available for every type of project regardless of fit</div>
+          </div>
         </div>
       </div>
+    </section>
 
+    <div class="divider shell"></div>
+
+    <!-- FAQ -->
+    <section class="shell" id="faq">
+      <div class="section-head reveal">
+        <div class="section-label">Common questions</div>
+        <h2>Frequently asked.</h2>
+      </div>
+      <div class="faq-list reveal">
+
+        <details class="faq-item">
+          <summary>What tools do you work in?<span class="faq-chevron" aria-hidden="true">+</span></summary>
+          <div class="faq-body">The work happens inside whatever the business already uses. Common platforms include GoHighLevel, HubSpot, Salesforce, Pipedrive, Zapier, Make, Airtable, Notion, ClickUp, Monday.com, ActiveCampaign, Zendesk, and Google Workspace. If your stack isn't listed, bring it to the audit — the overlap is usually broader than expected.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How long does a typical engagement take?<span class="faq-chevron" aria-hidden="true">+</span></summary>
+          <div class="faq-body">A focused repair of one area — a single pipeline, one broken workflow, a documentation gap — typically runs two to four weeks. Multi-area rebuilds depend on scope and are mapped clearly before any work begins. The first step is always the audit, which gives a realistic timeline for whatever the diagnosis finds.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>We're a small team. Is this built for us?<span class="faq-chevron" aria-hidden="true">+</span></summary>
+          <div class="faq-body">Most engagements are with teams of three to twenty people — businesses with real volume but without a dedicated operations or systems hire. The work is built to match that scale: practical, not enterprise-heavy, and documented so the team can maintain it without ongoing outside support.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Our situation is complicated. We have a mix of old systems and new ones.<span class="faq-chevron" aria-hidden="true">+</span></summary>
+          <div class="faq-body">Complicated is fine — it's common. The audit is specifically built to untangle mixed environments before any build decisions are made. The map that comes out of it distinguishes between what can be repaired, what needs to be replaced, and what can stay as-is. You won't be pushed toward a full rebuild if a targeted fix handles it.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Do you offer ongoing support after the project is done?<span class="faq-chevron" aria-hidden="true">+</span></summary>
+          <div class="faq-body">The deliverable always includes documentation and a handoff designed for the team to own the system going forward. For teams that want continued support — quarterly reviews, additional workflow builds, or training — that's available as a separate conversation after the initial engagement closes.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What does the intake form actually do?<span class="faq-chevron" aria-hidden="true">+</span></summary>
+          <div class="faq-body">It opens your email client with the intake pre-filled. Nothing is sent through a third-party server. Your data goes directly from your device to the email — no forms backend, no storage. It's kept simple intentionally.</div>
+        </details>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="shell" id="contact">
+      <div class="section-head reveal">
+        <div class="section-label">Audit intake</div>
+        <h2>Bring the part that keeps breaking.</h2>
+        <p class="section-desc">The first conversation maps symptoms, tools, owners, and handoffs — so the repair path is clear before any work starts.</p>
+      </div>
       <div class="contact-grid">
-        <div class="contact-info">
-          <div class="panel-head"><span>quick context</span><span>start here</span></div>
-          <div class="contact-body">
-            <p>This is a good fit when the business has traction, but the operating layer is lagging behind the volume of work.</p>
-            <div class="note">Useful first message: what keeps breaking, which tools are involved, who gets pulled in, and what a calmer version would look like.</div>
+
+        <div class="contact-panel reveal">
+          <div class="panel-head"><span>Good fit?</span><span>Read first</span></div>
+          <div class="panel-body">
+            <p>This works best when the business has traction — customers, active tools, real volume — but the operating layer hasn't kept up.</p>
+            <div class="note">
+              Most useful first message: what keeps breaking, which tools are involved, who gets pulled in to fix it, and what a calmer version would look like.
+            </div>
             <div class="contact-methods">
               <a class="contact-method" href="mailto:asmultitaskcollective@gmail.com?subject=Systems%20audit%20request">
-                <strong>Email</strong>
+                <strong>Email directly</strong>
                 <span>asmultitaskcollective@gmail.com</span>
               </a>
               <div class="contact-method">
-                <strong>Audit format</strong>
-                <span>30 minutes, remote, focused on diagnosis and first fixes.</span>
+                <strong>Format</strong>
+                <span>30 minutes, remote. Focused on diagnosis — not a sales call.</span>
               </div>
               <div class="contact-method">
-                <strong>Best fit</strong>
-                <span>CRM cleanup, workflow automation, SOPs, handoffs, reporting, and tool cleanup.</span>
+                <strong>Best fit areas</strong>
+                <span>CRM, workflow automation, SOPs, handoffs, reporting, tool consolidation.</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="contact-form">
-          <div class="panel-head"><span>diagnostic intake</span><span>standalone form</span></div>
-          <div class="contact-body">
-            <form id="auditForm">
-              <div>
-                <label for="name">Name</label>
-                <input id="name" name="name" type="text" placeholder="Your name" required>
+        <div class="contact-panel reveal reveal-d1">
+          <div class="panel-head"><span>Intake form</span><span>~3 minutes</span></div>
+          <div class="panel-body">
+            <form id="intakeForm" novalidate>
+              <div class="field">
+                <label for="f-name">Name</label>
+                <input id="f-name" name="name" type="text" placeholder="Your name" required autocomplete="name">
               </div>
-              <div>
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" placeholder="you@company.com" required>
+              <div class="field">
+                <label for="f-email">Email</label>
+                <input id="f-email" name="email" type="email" placeholder="you@yourcompany.com" required autocomplete="email">
               </div>
-              <div>
-                <label for="tools">Current tools</label>
-                <input id="tools" name="tools" type="text" placeholder="CRM, automation tools, docs, support tools">
+              <div class="field">
+                <label for="f-tools">Current tools</label>
+                <input id="f-tools" name="tools" type="text" placeholder="CRM, automation tools, docs, support…">
               </div>
-              <div>
-                <label for="need">Primary area</label>
-                <select id="need" name="need">
+              <div class="field">
+                <label for="f-area">Primary area</label>
+                <select id="f-area" name="area">
                   <option>CRM cleanup or architecture</option>
                   <option>Workflow automation</option>
                   <option>Documentation, SOPs, or knowledge base</option>
                   <option>General operations cleanup</option>
-                  <option>Not sure yet</option>
+                  <option>Not sure yet — need the diagnosis first</option>
                 </select>
               </div>
-              <div>
-                <label for="message">Where does it keep breaking?</label>
-                <textarea id="message" name="message" placeholder="Describe the recurring issue, handoff, or process that keeps pulling attention back." required></textarea>
+              <div class="field">
+                <label for="f-message">Where does it keep breaking?</label>
+                <textarea id="f-message" name="message" placeholder="Describe the recurring issue, handoff failure, or process that keeps pulling attention back." required></textarea>
               </div>
-              <button class="button primary" type="submit">Prepare email draft</button>
-              <p class="form-note">This standalone version opens your email client instead of sending data through a third-party form.</p>
+              <div class="form-footer">
+                <button class="btn btn-primary btn-full" type="submit">Open email draft</button>
+                <p class="form-note">Opens your mail client with the intake pre-filled. No data passes through a third-party server.</p>
+              </div>
             </form>
           </div>
         </div>
+
       </div>
     </section>
 
+    <!-- CTA BAND -->
     <section class="shell" aria-label="Final call to action">
-      <div class="cta-band">
-        <div>
-          <strong>Ready for cleaner operating logic?</strong>
-          <span>Start with the messy part. The first pass turns it into a practical repair map.</span>
+      <div class="cta-band reveal">
+        <div class="cta-band-text">
+          <strong>Ready for a calmer operating layer?</strong>
+          <span>Start with the messy part. The audit turns it into a practical repair map.</span>
         </div>
-        <a class="button dark" href="#contact">Request the audit</a>
+        <a class="btn btn-primary btn-lg" href="#contact" style="flex-shrink:0">Request the audit →</a>
       </div>
     </section>
+
   </main>
 
-  <footer class="shell">
-    <div class="footer-line">
-      <span>© <span id="year"></span> AS Multi-task Collective</span>
-      <span>Remote systems audits for growing teams</span>
+  <!-- FOOTER -->
+  <footer>
+    <div class="shell">
+      <div class="footer-inner">
+        <a class="footer-brand" href="#top">
+          <span class="footer-brand-mark" aria-hidden="true">AS</span>
+          AS Multi-task Collective
+        </a>
+        <div class="footer-links">
+          <a href="#signals">Signals</a>
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#faq">FAQ</a>
+          <a href="mailto:asmultitaskcollective@gmail.com">Contact</a>
+        </div>
+        <span class="footer-copy">© <span id="yr"></span> AS Multi-task Collective</span>
+      </div>
     </div>
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <button class="back-top" id="backTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
 
   <script>
-    (function () {
-      "use strict";
+  (function () {
+    "use strict";
 
-      var year = document.getElementById("year");
-      var form = document.getElementById("auditForm");
-      var toast = document.getElementById("toast");
+    // year
+    document.getElementById("yr").textContent = new Date().getFullYear();
 
-      year.textContent = new Date().getFullYear();
+    // toast
+    var toast = document.getElementById("toast");
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(function () { toast.classList.remove("show"); }, 3000);
+    }
 
-      function showToast(message) {
-        toast.textContent = message;
-        toast.style.opacity = "1";
-        clearTimeout(toast._timer);
-        toast._timer = setTimeout(function () {
-          toast.style.opacity = "0";
-        }, 2600);
-      }
+    // ops widget tabs
+    var tabBefore  = document.getElementById("tab-before");
+    var tabAfter   = document.getElementById("tab-after");
+    var panelBefore = document.getElementById("panel-before");
+    var panelAfter  = document.getElementById("panel-after");
+    function switchTab(show) {
+      var isBefore = show === "before";
+      tabBefore.classList.toggle("active-before", isBefore);
+      tabAfter.classList.toggle("active-after", !isBefore);
+      tabBefore.setAttribute("aria-selected", isBefore);
+      tabAfter.setAttribute("aria-selected", !isBefore);
+      panelBefore.classList.toggle("visible", isBefore);
+      panelAfter.classList.toggle("visible", !isBefore);
+    }
+    tabBefore.addEventListener("click", function () { switchTab("before"); });
+    tabAfter.addEventListener("click",  function () { switchTab("after");  });
 
-      form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        if (!form.reportValidity()) return;
-
-        var data = new FormData(form);
-        var subject = "Systems audit request";
-        var body = [
-          "Name: " + data.get("name"),
-          "Email: " + data.get("email"),
-          "Tools: " + (data.get("tools") || "Not specified"),
-          "Primary area: " + data.get("need"),
-          "",
-          "Where it keeps breaking:",
-          data.get("message")
-        ].join("\n");
-
-        window.location.href = "mailto:asmultitaskcollective@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-        showToast("Email draft prepared.");
+    // scroll reveal
+    var revealEls = document.querySelectorAll(".reveal");
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add("up");
+          observer.unobserve(e.target);
+        }
       });
-    })();
+    }, { threshold: 0.07 });
+    revealEls.forEach(function (el) { observer.observe(el); });
+
+    // back to top
+    var backTop = document.getElementById("backTop");
+    window.addEventListener("scroll", function () {
+      backTop.classList.toggle("show", window.scrollY > 400);
+    }, { passive: true });
+
+    // form
+    document.getElementById("intakeForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!e.target.reportValidity()) return;
+      var d = new FormData(e.target);
+      var body = [
+        "Name: " + d.get("name"),
+        "Email: " + d.get("email"),
+        "Tools: " + (d.get("tools") || "Not specified"),
+        "Primary area: " + d.get("area"),
+        "",
+        "Where it keeps breaking:",
+        d.get("message")
+      ].join("\n");
+      window.location.href =
+        "mailto:asmultitaskcollective@gmail.com" +
+        "?subject=" + encodeURIComponent("Systems audit request") +
+        "&body=" + encodeURIComponent(body);
+      showToast("Email draft ready — check your mail client.");
+    });
+
+  }());
   </script>
+
 </body>
 </html>
