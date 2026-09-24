@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://asmultitaskcollective-prog.github.io/systems/sitemap.xml

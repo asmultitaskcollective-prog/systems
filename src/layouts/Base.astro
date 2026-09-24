@@ -1,0 +1,79 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  robots?: string;
+}
+
+const { title, description, robots } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "AS Multi-task Collective",
+  alternateName: "ASMC",
+  url: new URL(base, Astro.site).href,
+  logo: new URL(`${base}apple-touch-icon.png`, Astro.site).href,
+  email: "asmultitaskcollective@gmail.com",
+  description,
+  founder: { "@type": "Person", name: "Aaron Suarez", url: "https://dlibrary-omega.vercel.app/about/" },
+  knowsAbout: ["Managed operations", "Trade business administration", "CRM", "Workflow automation", "Job scheduling"],
+};
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content={description}>
+{robots && <meta name="robots" content={robots}>}
+<link rel="canonical" href={canonical}>
+<meta property="og:type" content="website">
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={canonical}>
+<meta property="og:site_name" content="AS Multi-task Collective">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml">
+<link rel="icon" href={`${base}favicon.png`} type="image/png">
+<link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`}>
+<meta name="theme-color" content="#0A1120">
+<script type="application/ld+json" set:html={JSON.stringify(organization)} />
+</head>
+<body>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href={base}>
+      <img src={`${base}favicon.svg`} alt="" width="32" height="32">
+      <div><strong>AS Multi-task Collective</strong><span>managed operations for trades</span></div>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href={`${base}#offer`}>What you get</a>
+      <a href={`${base}#how`}>How it works</a>
+      <a href={`${base}#faq`}>FAQ</a>
+      <a class="btn btn-primary" href={`${base}#apply`}>Apply for the pilot</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<slot />
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <p><a href={base}>AS Multi-task Collective</a> · software-enabled managed operations</p>
+      <p>Founded by <a href="https://dlibrary-omega.vercel.app/about/">Aaron Suarez</a>. Working notes in <a href="https://dlibrary-omega.vercel.app/">The Working Library</a>.</p>
+    </div>
+    <div>
+      <p><a href="mailto:asmultitaskcollective@gmail.com">asmultitaskcollective@gmail.com</a></p>
+      <p>© {new Date().getFullYear()} AS Multi-task Collective</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
