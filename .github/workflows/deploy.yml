@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy site
 on:
   push:
     branches: [main]
@@ -37,3 +37,34 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Cloudflare Workers (static assets). Dormant until the repository has the
+  # CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID secrets; set the
+  # CLOUDFLARE_SITE_URL variable to the workers.dev or custom-domain origin.
+  cloudflare:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - if: env.CF_TOKEN == ''
+        run: echo "No CLOUDFLARE_API_TOKEN secret; skipping the Cloudflare deploy."
+      - if: env.CF_TOKEN != ''
+        uses: actions/checkout@v4
+      - if: env.CF_TOKEN != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - if: env.CF_TOKEN != ''
+        run: npm ci && npm run build
+        env:
+          DEPLOY_TARGET: cloudflare
+          SITE_URL: ${{ vars.CLOUDFLARE_SITE_URL }}
+      - if: env.CF_TOKEN != ''
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy

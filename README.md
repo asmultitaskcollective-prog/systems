@@ -11,15 +11,25 @@ npm run build   # static output in dist/
 
 ## Hosting
 
-The same build serves two hosts, chosen by environment variables:
+The same build serves two hosts. `.github/workflows/deploy.yml` deploys to
+GitHub Pages on every push to `main` (served under `/systems/`).
 
-| Host | `SITE_URL` | `BASE_PATH` |
-| --- | --- | --- |
-| GitHub Pages (default, deployed by `.github/workflows/deploy.yml`) | `https://asmultitaskcollective-prog.github.io` | `/systems/` |
-| Cloudflare Pages | the Pages origin, e.g. `https://asmc.pages.dev` | `/` |
+**Cloudflare Workers (static assets)** uses `wrangler.jsonc` and serves from the
+root path. Any one of these works:
 
-For Cloudflare Pages: build command `npm run build`, output directory `dist`,
-Node 22, and the two variables above.
+1. **Dashboard, no tokens:** Workers & Pages → Create → Import a repository →
+   `asmultitaskcollective-prog/systems`. Build command `npm run build`, deploy
+   command `npx wrangler deploy`. Workers Builds is detected automatically, so
+   the site builds for the root path. Add a `SITE_URL` build variable with the
+   final origin (e.g. `https://asmc-site.<subdomain>.workers.dev`).
+2. **GitHub Actions:** add repository secrets `CLOUDFLARE_API_TOKEN` (template
+   "Edit Cloudflare Workers") and `CLOUDFLARE_ACCOUNT_ID`, and a repository
+   variable `CLOUDFLARE_SITE_URL`. The `cloudflare` job then deploys on every
+   push to `main`.
+3. **From this machine:** `npx wrangler login`, then build with
+   `DEPLOY_TARGET=cloudflare` and run `npx wrangler deploy`.
+
+`SITE_URL` sets canonical URLs; `BASE_PATH` overrides the path prefix.
 
 ## Editing
 
