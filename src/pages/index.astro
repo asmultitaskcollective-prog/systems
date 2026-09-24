@@ -5,11 +5,11 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const spine = ["Lead", "Customer", "Property", "Quote", "Survey", "Job", "Purchasing", "Schedule", "Work", "Invoice", "Payment", "Warranty"];
 const faqs = [
   ["Is this software or a service?", "Both, on purpose. D'Workbench is the operating system your jobs run through; a trained ASMC operator works inside it with you. You get the capability — enquiries answered, quotes chased, jobs moving — not a login you then have to configure alone."],
-  ["What does the pilot cost?", "Pilot terms are agreed with each business before anything starts, in writing, including scope, cover hours and what happens at the end. There is no charge for the first conversation or the dry run."],
+  ["What does the pilot cost?", "Pilot terms — scope, cover, cost and what happens at the end — are agreed in writing with each business before anything starts. The first conversation is only about whether the pilot fits."],
   ["Do we have to replace the tools we use now?", "Not on day one. Onboarding starts from what you already have: we import your customers and open jobs, and connect the inbox and calendar you use. Anything that works stays until there is a clear reason to change it."],
-  ["Who can see our data?", "Your team and the operators assigned to your account. An operator may support more than one business, but each business has its own workspace: records, messages and financial information never cross between clients."],
+  ["Who can see our data?", "Your team and the operators assigned to your account. An operator may support more than one business, but each business has its own workspace, and records, messages and financial information are kept separate between clients."],
   ["What if our trade isn't glazing or home improvement?", "The pilot starts with trades whose jobs follow a quote → survey → install path, because that is where D'Workbench's templates are most complete. If your work looks similar, apply anyway and say what differs."],
-  ["What happens after the pilot?", "You keep your data either way. If it works, the service continues on terms agreed from what the pilot measured. If it doesn't, we write down why — that is part of what the pilot is for."],
+  ["What happens after the pilot?", "Your records stay yours either way. If the pilot works, any ongoing service is agreed from what the pilot actually measured. If it doesn't, we write down why — that is part of what the pilot is for."],
 ];
 ---
 <Base
@@ -27,7 +27,7 @@ const faqs = [
         <a class="btn btn-ghost" href="#how">See how onboarding works</a>
       </div>
     </div>
-    <div class="panel" aria-label="Example: what an operator sees each morning">
+    <figure class="panel" aria-label="Example: what an operator sees each morning">
       <div class="panel-top"><span>D'Workbench · <b>needs attention</b></span><span>example</span></div>
       <ul>
         <li><span class="dot dot-red"></span><div>Enquiry from Mrs Patel unanswered<small>came in 19:42 yesterday · kitchen windows</small></div><span class="tag">reply</span></li>
@@ -36,8 +36,8 @@ const faqs = [
         <li><span class="dot dot-blue"></span><div>Survey notes missing measurements<small>ask the surveyor before quoting</small></div><span class="tag">waiting</span></li>
         <li><span class="dot dot-green"></span><div>Invoice INV-208 paid<small>deposit received · job released to schedule</small></div><span class="tag">done</span></li>
       </ul>
-      <div class="panel-foot">The operator works the list. <b>You see what changed.</b></div>
-    </div>
+      <figcaption class="panel-foot">The operator works the list. <b>You see what changed.</b></figcaption>
+    </figure>
   </div>
 </section>
 
@@ -168,7 +168,7 @@ const faqs = [
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Where this comes from</span>
-      <h2>Built from years of repairing other people's systems.</h2>
+      <h2>Built from hands-on work repairing other people's systems.</h2>
       <p>Before D'Workbench, ASMC's work was fixing CRMs, automations and handoffs inside growing businesses. The same failures kept appearing — so they became defaults in the product.</p>
     </div>
     <div class="cases">
@@ -187,9 +187,9 @@ const faqs = [
       <span class="eyebrow">Pilot cohort</span>
       <div class="section-head" style="margin:1rem 0 0"><h2>Apply for a place in the pilot.</h2><p>A small group of similar businesses, so the service can be done properly and measured honestly.</p></div>
       <dl class="fit">
-        <div><dt>Best fit</dt><dd>Trade and home-improvement businesses with roughly 2–15 people — glazing, windows and doors, roofing, installations.</dd></div>
+        <div><dt>Best fit</dt><dd>Small trade and home-improvement businesses — glazing, windows and doors, roofing, installations — where the owner still carries most of the admin.</dd></div>
         <div><dt>You have</dt><dd>Steady enquiries, and admin that's falling behind the work.</dd></div>
-        <div><dt>You get</dt><dd>A reply within two working days, then a call to see whether the pilot fits.</dd></div>
+        <div><dt>You get</dt><dd>A personal reply to every application, then a call to see whether the pilot fits.</dd></div>
       </dl>
     </div>
     <form class="form" id="pilot-form" novalidate>
@@ -217,6 +217,7 @@ const faqs = [
       </div>
       <label class="field"><span>Where does admin slip most?</span><textarea name="problem" placeholder="Unanswered enquiries, quotes nobody chases, supplier delays, invoices…"></textarea></label>
       <button class="btn btn-primary" type="submit">Send application →</button>
+      <p class="form-status" id="pilot-form-status" role="status" hidden>Your email app should now be open with the application filled in — just press send. Nothing opened? Email <a href="mailto:asmultitaskcollective@gmail.com?subject=Pilot%20application">asmultitaskcollective@gmail.com</a> directly.</p>
       <p class="form-note">Sending opens your email app with the details filled in — nothing goes through a third-party server. Prefer plain email? Write to <a href="mailto:asmultitaskcollective@gmail.com?subject=Pilot%20application">asmultitaskcollective@gmail.com</a>.</p>
     </form>
   </div>
@@ -257,6 +258,8 @@ const faqs = [
     ].join("\n");
     var subject = "Pilot application — " + get("business");
     window.location.href = "mailto:asmultitaskcollective@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    var status = document.getElementById("pilot-form-status");
+    if (status) status.hidden = false;
   });
 })();
 </script>
