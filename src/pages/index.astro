@@ -1,0 +1,263 @@
+---
+import Base from "../layouts/Base.astro";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const spine = ["Lead", "Customer", "Property", "Quote", "Survey", "Job", "Purchasing", "Schedule", "Work", "Invoice", "Payment", "Warranty"];
+const faqs = [
+  ["Is this software or a service?", "Both, on purpose. D'Workbench is the operating system your jobs run through; a trained ASMC operator works inside it with you. You get the capability — enquiries answered, quotes chased, jobs moving — not a login you then have to configure alone."],
+  ["What does the pilot cost?", "Pilot terms are agreed with each business before anything starts, in writing, including scope, cover hours and what happens at the end. There is no charge for the first conversation or the dry run."],
+  ["Do we have to replace the tools we use now?", "Not on day one. Onboarding starts from what you already have: we import your customers and open jobs, and connect the inbox and calendar you use. Anything that works stays until there is a clear reason to change it."],
+  ["Who can see our data?", "Your team and the operators assigned to your account. An operator may support more than one business, but each business has its own workspace: records, messages and financial information never cross between clients."],
+  ["What if our trade isn't glazing or home improvement?", "The pilot starts with trades whose jobs follow a quote → survey → install path, because that is where D'Workbench's templates are most complete. If your work looks similar, apply anyway and say what differs."],
+  ["What happens after the pilot?", "You keep your data either way. If it works, the service continues on terms agreed from what the pilot measured. If it doesn't, we write down why — that is part of what the pilot is for."],
+];
+---
+<Base
+  title="AS Multi-task Collective — Managed operations for trade businesses"
+  description="Trained remote operators running your admin inside D'Workbench, a ready-made operating system for enquiries, quotes, jobs, scheduling and invoices. Now accepting applications for the pilot cohort."
+>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="pilot-chip"><i></i>Pilot cohort · applications open</span>
+      <h1>Your trade. Our systems. <em>Less administration.</em></h1>
+      <p class="hero-lede">ASMC runs the administrative backbone of small trade businesses: a trained remote operator working inside D'Workbench, a ready-made system for enquiries, quotes, jobs, scheduling and invoices. You keep doing the work only you can do.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#apply">Apply for the pilot →</a>
+        <a class="btn btn-ghost" href="#how">See how onboarding works</a>
+      </div>
+    </div>
+    <div class="panel" aria-label="Example: what an operator sees each morning">
+      <div class="panel-top"><span>D'Workbench · <b>needs attention</b></span><span>example</span></div>
+      <ul>
+        <li><span class="dot dot-red"></span><div>Enquiry from Mrs Patel unanswered<small>came in 19:42 yesterday · kitchen windows</small></div><span class="tag">reply</span></li>
+        <li><span class="dot dot-amber"></span><div>Quote Q-1042 sent 6 days ago<small>no response · follow-up due today</small></div><span class="tag">chase</span></li>
+        <li><span class="dot dot-amber"></span><div>Supplier hasn't confirmed frames<small>install booked Thursday · Job J-311</small></div><span class="tag">blocked</span></li>
+        <li><span class="dot dot-blue"></span><div>Survey notes missing measurements<small>ask the surveyor before quoting</small></div><span class="tag">waiting</span></li>
+        <li><span class="dot dot-green"></span><div>Invoice INV-208 paid<small>deposit received · job released to schedule</small></div><span class="tag">done</span></li>
+      </ul>
+      <div class="panel-foot">The operator works the list. <b>You see what changed.</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="problem">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The problem</span>
+      <h2>Admin doesn't make you money. Dropped admin loses it.</h2>
+      <p>In a three-person trade business, the paperwork lands on whoever is least busy — which is nobody. The cost doesn't show up as admin. It shows up as work you never got paid for.</p>
+    </div>
+    <div class="leak-grid">
+      <div class="leak"><b>Lost</b><h3>The enquiry nobody answered</h3><p>It came in during an install. By the time anyone looked, they had booked someone else.</p></div>
+      <div class="leak"><b>Stalled</b><h3>The quote nobody chased</h3><p>Sent, then forgotten. A two-line follow-up would have closed it.</p></div>
+      <div class="leak"><b>Rework</b><h3>The supplier delay found on install day</h3><p>Materials weren't there, the customer took a day off, and the van went home.</p></div>
+      <div class="leak"><b>Unpaid</b><h3>The invoice that slipped</h3><p>The job was done and the customer was happy. Nobody asked for the balance.</p></div>
+    </div>
+    <p class="callout">Buying software doesn't fix this on its own — someone still has to set it up, keep it current and make sure it's used. That someone is the part ASMC provides.</p>
+  </div>
+</section>
+
+<section class="section" id="offer" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What you get</span>
+      <h2>A working operation, not an empty CRM.</h2>
+      <p>Three parts that work together. The first two are what the pilot delivers; the third is on the roadmap and marked that way.</p>
+    </div>
+    <div class="offer-grid">
+      <article class="offer">
+        <span class="offer-status status-core">In the pilot</span>
+        <span class="eyebrow">D'Workbench</span>
+        <h3>A system that already knows how trade jobs run</h3>
+        <p>Pipelines, job stages, scheduling rules and follow-ups arrive set up for your trade. You change what's different about your business — not build it from nothing.</p>
+        <ul><li>Enquiries, quotes, jobs and invoices in one record</li><li>Schedule and dispatch tied back to the job</li><li>Conversations kept with the customer they belong to</li></ul>
+      </article>
+      <article class="offer offer-featured">
+        <span class="offer-status status-core">In the pilot</span>
+        <span class="eyebrow">ASMC operators</span>
+        <h3>A trained person running the admin inside it</h3>
+        <p>An ASMC operator answers enquiries, chases quotes and suppliers, keeps the schedule honest and follows invoices through — and flags anything that needs your decision.</p>
+        <ul><li>Cover agreed per business, in writing</li><li>Exceptions escalated to you, not guessed at</li><li>Every action recorded against the job</li></ul>
+      </article>
+      <article class="offer">
+        <span class="offer-status status-roadmap">On the roadmap</span>
+        <span class="eyebrow">Growth</span>
+        <h3>From enquiry to repeat business</h3>
+        <p>Follow-up campaigns and reporting that connect marketing to paid jobs. Built after the operating core is proven — not before.</p>
+        <ul><li>Which enquiries became paid work</li><li>Review and repeat-customer follow-ups</li></ul>
+      </article>
+    </div>
+
+    <div class="section-head" style="margin-top:clamp(3.5rem,8vw,5rem)">
+      <span class="eyebrow">Who does what</span>
+      <h2>Software for what repeats. People for what needs judgment.</h2>
+    </div>
+    <div class="split">
+      <div class="software">
+        <span class="eyebrow">D'Workbench handles</span>
+        <h3>The structure</h3>
+        <ul><li>Remembering what's due and what's waiting</li><li>Moving jobs through stages with the right checks</li><li>Reminders, templates and routine follow-ups</li><li>A full history of what changed and why</li></ul>
+      </div>
+      <div class="human">
+        <span class="eyebrow">Your ASMC operator handles</span>
+        <h3>The judgment</h3>
+        <ul><li>Talking to customers and suppliers</li><li>Deciding what's urgent today</li><li>Spotting the exception before it becomes a problem</li><li>Bringing you only the decisions that are yours</li></ul>
+      </div>
+    </div>
+    <div class="spine" aria-label="The operational path D'Workbench models">
+      {spine.map((step) => <span>{step}</span>)}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">How onboarding works</span>
+      <h2>See it run before you move anything.</h2>
+      <p>The aim is a working setup in one guided session. The dry run lets you try the whole customer journey on example data first — nothing touches your real customers or money.</p>
+    </div>
+    <ol class="steps">
+      <li><h3>Choose your trade</h3><p>Start from the closest operating template.</p></li>
+      <li><h3>Load the template</h3><p>Stages, documents, scheduling rules and follow-ups, pre-built.</p></li>
+      <li><h3>Dry-run a job</h3><p>Quote, schedule and invoice a simulated customer end to end.</p></li>
+      <li><h3>Adapt it</h3><p>Deposits, services, who does what, what needs your approval.</p></li>
+      <li><h3>Go live</h3><p>Import records, connect your inbox, and switch on operator cover.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section band" id="measured">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Measured, not promised</span>
+      <h2>You judge the pilot by what actually happened.</h2>
+      <p>No hours timesheets. The service is measured by whether your business stayed under control.</p>
+    </div>
+    <div class="outcomes">
+      <div><b>Enquiries handled</b><p>How fast every enquiry got a real reply.</p></div>
+      <div><b>Quotes followed up</b><p>Nothing sent and forgotten.</p></div>
+      <div><b>Jobs moving</b><p>What advanced, what's blocked, and on whom.</p></div>
+      <div><b>Delays caught early</b><p>Supplier and scheduling problems surfaced before install day.</p></div>
+      <div><b>Invoices followed through</b><p>From job done to payment received.</p></div>
+      <div><b>Commitments kept</b><p>Missed promises counted, not hidden.</p></div>
+    </div>
+    <div class="honesty">
+      <div>
+        <h3>What's true today</h3>
+        <ul>
+          <li>D'Workbench is in active development; this pilot is its first supervised use with outside businesses.</li>
+          <li>Operators are trained on real trade workflows, not generic VA tasks.</li>
+          <li>Every client has its own workspace; data never crosses between businesses.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What the pilot is for</h3>
+        <ul>
+          <li>Proving the service on a small group of similar businesses first.</li>
+          <li>Measuring operator time and quality before taking on more clients.</li>
+          <li>Finding what still needs a human — and what can safely be automated.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="background">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Where this comes from</span>
+      <h2>Built from years of repairing other people's systems.</h2>
+      <p>Before D'Workbench, ASMC's work was fixing CRMs, automations and handoffs inside growing businesses. The same failures kept appearing — so they became defaults in the product.</p>
+    </div>
+    <div class="cases">
+      <article class="case"><span class="eyebrow">Service business</span><h3>Lead capture to payment, rebuilt as one path</h3><p>Routing, booking, proposal, contract, payment and after-sales follow-up in documented sequence. The team stopped re-entering data between stages.</p><div class="tags"><span>CRM architecture</span><span>payments</span><span>QA</span></div></article>
+      <article class="case"><span class="eyebrow">Field operations</span><h3>Estimator handoffs that actually come back</h3><p>Appointment, reminder, submission and escalation logic rebuilt so field data reached the office reliably — without chasing it on Slack.</p><div class="tags"><span>handoffs</span><span>SMS</span><span>escalation</span></div></article>
+      <article class="case"><span class="eyebrow">Rental operations</span><h3>Two sides of a market, one operating model</h3><p>Separate pipelines for supply and demand with campaign logic, source tracking and consultation routing — both sides managed without crossed wires.</p><div class="tags"><span>pipelines</span><span>email ops</span><span>reporting</span></div></article>
+      <article class="case"><span class="eyebrow">Knowledge systems</span><h3>Tribal knowledge turned into decisions</h3><p>Scattered know-how became a reference layer tied to case types and exception paths, so new operators could work without a trainer at their side.</p><div class="tags"><span>SOPs</span><span>decision trees</span><span>onboarding</span></div></article>
+    </div>
+    <p class="proof-note">The reasoning behind the product is written up in the open — manuals, case files and field notes in <a href="https://dlibrary-omega.vercel.app/projects/">The Working Library</a>, including the <a href="https://dlibrary-omega.vercel.app/lab/trades-crm.html">applied study behind D'Workbench</a>.</p>
+  </div>
+</section>
+
+<section class="section" id="apply" style="padding-top:0">
+  <div class="wrap apply">
+    <div>
+      <span class="eyebrow">Pilot cohort</span>
+      <div class="section-head" style="margin:1rem 0 0"><h2>Apply for a place in the pilot.</h2><p>A small group of similar businesses, so the service can be done properly and measured honestly.</p></div>
+      <dl class="fit">
+        <div><dt>Best fit</dt><dd>Trade and home-improvement businesses with roughly 2–15 people — glazing, windows and doors, roofing, installations.</dd></div>
+        <div><dt>You have</dt><dd>Steady enquiries, and admin that's falling behind the work.</dd></div>
+        <div><dt>You get</dt><dd>A reply within two working days, then a call to see whether the pilot fits.</dd></div>
+      </dl>
+    </div>
+    <form class="form" id="pilot-form" novalidate>
+      <div class="form-row">
+        <label class="field"><span>Your name</span><input name="name" autocomplete="name" required></label>
+        <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
+      </div>
+      <div class="form-row">
+        <label class="field"><span>Business</span><input name="business" autocomplete="organization" required></label>
+        <label class="field"><span>Trade</span>
+          <select name="trade">
+            <option>Glazing / windows &amp; doors</option>
+            <option>Roofing</option>
+            <option>Home improvement / installations</option>
+            <option>HVAC / plumbing / electrical</option>
+            <option>Other trade</option>
+          </select>
+        </label>
+      </div>
+      <div class="form-row">
+        <label class="field"><span>Team size</span>
+          <select name="size"><option>Just me</option><option>2–5</option><option selected>6–15</option><option>16+</option></select>
+        </label>
+        <label class="field"><span>Current tools</span><input name="tools" placeholder="e.g. spreadsheets, Jobber, GoHighLevel"></label>
+      </div>
+      <label class="field"><span>Where does admin slip most?</span><textarea name="problem" placeholder="Unanswered enquiries, quotes nobody chases, supplier delays, invoices…"></textarea></label>
+      <button class="btn btn-primary" type="submit">Send application →</button>
+      <p class="form-note">Sending opens your email app with the details filled in — nothing goes through a third-party server. Prefer plain email? Write to <a href="mailto:asmultitaskcollective@gmail.com?subject=Pilot%20application">asmultitaskcollective@gmail.com</a>.</p>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Questions</span><h2>Before you apply.</h2></div>
+    <div class="faq">
+      {faqs.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+(function () {
+  var form = document.getElementById("pilot-form");
+  if (!form) return;
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var missing = ["name", "email", "business"].filter(function (n) { return !form[n].value.trim(); });
+    if (missing.length || !form.email.checkValidity()) {
+      (form[missing[0]] || form.email).focus();
+      form.reportValidity();
+      return;
+    }
+    var get = function (n) { return form[n].value.trim(); };
+    var body = [
+      "Name: " + get("name"),
+      "Email: " + get("email"),
+      "Business: " + get("business"),
+      "Trade: " + get("trade"),
+      "Team size: " + get("size"),
+      "Current tools: " + (get("tools") || "-"),
+      "",
+      "Where admin slips most:",
+      get("problem") || "-",
+    ].join("\n");
+    var subject = "Pilot application — " + get("business");
+    window.location.href = "mailto:asmultitaskcollective@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  });
+})();
+</script>
+</Base>
