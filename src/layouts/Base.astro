@@ -5,9 +5,11 @@ interface Props {
   title: string;
   description: string;
   robots?: string;
+  /** The header's button: the pilot by default; a product page points at its own next step. */
+  cta?: { label: string; href: string };
 }
 
-const { title, description, robots } = Astro.props;
+const { title, description, robots, cta } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const organization = {
@@ -53,10 +55,11 @@ const organization = {
       <div><strong>AS Multi-task Collective</strong><span>managed operations for trades</span></div>
     </a>
     <nav class="site-nav" aria-label="Main">
+      <a href={`${base}dworkbench/`}>D'Workbench</a>
       <a href={`${base}#offer`}>What you get</a>
       <a href={`${base}#how`}>How it works</a>
       <a href={`${base}#faq`}>FAQ</a>
-      <a class="btn btn-primary" href={`${base}#apply`}>Apply for the pilot</a>
+      <a class="btn btn-primary" href={cta?.href ?? `${base}#apply`}>{cta?.label ?? "Apply for the pilot"}</a>
     </nav>
   </div>
 </header>
