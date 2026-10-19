@@ -1,0 +1,278 @@
+---
+import Base from "../layouts/Base.astro";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const demoSubject = "D'Workbench demo";
+const demoBody = [
+  "I'd like a 20-minute demo of D'Workbench.",
+  "",
+  "Business:",
+  "Trade:",
+  "Mailboxes we use (Gmail / Outlook / other):",
+  "Good times for a call:",
+].join("\n");
+const demoMail = `mailto:asmultitaskcollective@gmail.com?subject=${encodeURIComponent(demoSubject)}&body=${encodeURIComponent(demoBody)}`;
+const faqs = [
+  ["Do we have to stop using Outlook or Gmail?", "No. D'Workbench reads the mailboxes you already have. Filing a conversation here files it in the mailbox too, so Outlook and your phone agree, and nothing is ever deleted from the mail server."],
+  ["Which email providers does it work with?", "Any mailbox you can reach over IMAP: Gmail and Google Workspace, Microsoft 365 and Outlook (with Sign in with Microsoft), and most hosting providers' email. Several accounts sit side by side, each labelled, and a reply leaves from the account the email came in on."],
+  ["Will the AI send emails on its own?", "Only if you let it. What Claude may do by itself is your setting, one kind of action at a time: go ahead, wait for a person, or never. Everything it does is marked as Claude's and recorded, and nothing leaves the building until both of the sending switches are on."],
+  ["What does it cost?", "Founding partners agree a price on a call, with the discount named and time-limited in writing. You pay from day one, and you know exactly what the price becomes when the discount ends."],
+  ["Where is our data kept?", "In London: the database and the app's servers both run there. Each business has its own workspace, and every change records who made it, when, and what it replaced."],
+  ["Is it only for glazing?", "It was built inside glazing work, so it fits trades whose jobs run enquiry → survey → install → aftercare: windows and doors, roofing, installations. If your week looks similar, book a demo and say what differs."],
+];
+---
+<Base
+  title="D'Workbench — the shared inbox for trade businesses, with Claude built in"
+  description="Connect the mailboxes you already use. Every email, call and note lands on its customer and job, your team works it like Outlook, and Claude works inside it with you. Founding partners wanted."
+  cta={{ label: "Book a demo", href: "#demo" }}
+>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="pilot-chip"><i></i>D'Workbench · founding partners wanted</span>
+      <h1>Every email, call and note, <em>on the right job.</em></h1>
+      <p class="hero-lede">D'Workbench is a shared inbox and CRM built for trade businesses. Connect the mailboxes you already use: every conversation lands on its customer and job, your team works it like Outlook, and Claude — the AI assistant — works inside it with you.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#demo">Book a 20-minute demo →</a>
+        <a class="btn btn-ghost" href="#inside">See it working</a>
+      </div>
+    </div>
+    <figure class="shot shot-hero">
+      <img src={`${base}screens/inbox.jpg`} width="1440" height="860" alt="D'Workbench Conversations: an inbox of customer conversations on the left, an email from a letting agent about survey access open on the right, with its job, status and attachments." loading="eager">
+      <figcaption>Practice data. The inbox, with a letting agent's email open on its job.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section" id="problem">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The problem</span>
+      <h2>Your jobs are talked about in five places.</h2>
+      <p>The office inbox, someone's own Gmail, a WhatsApp on the fitter's phone, a call nobody wrote down. The work is fine. What goes missing is what was said about it.</p>
+    </div>
+    <div class="leak-grid">
+      <div class="leak"><b>Lost</b><h3>The email in a personal inbox</h3><p>Sent to whoever the customer had the address of. Nobody else knew it came.</p></div>
+      <div class="leak"><b>Unwritten</b><h3>The call about the gate code</h3><p>Said on the phone, remembered by one person, needed by another on install day.</p></div>
+      <div class="leak"><b>Repeated</b><h3>The question asked twice</h3><p>The answer was in a thread nobody could find, so the customer was asked again.</p></div>
+      <div class="leak"><b>Disputed</b><h3>"I told you on the 14th"</h3><p>Maybe they did. Without the message on the job, nobody can say.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="inside" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What it does</span>
+      <h2>An inbox that knows which job it's about.</h2>
+      <p>Three things, working together. Screenshots are from the practice workspace, with made-up customers.</p>
+    </div>
+
+    <div class="feature">
+      <div>
+        <span class="eyebrow">01 · One inbox</span>
+        <h3>Every mailbox, one list, worked like Outlook</h3>
+        <ul>
+          <li>Gmail, Microsoft 365 and your host's email, side by side</li>
+          <li>Outlook's keys: J and K to move, R to reply, E to archive, with Undo</li>
+          <li>Status, owner and tags per conversation, so two people never answer the same email</li>
+          <li>Filing kept in step with your mailbox; nothing deleted from the server</li>
+        </ul>
+      </div>
+      <figure class="shot">
+        <img src={`${base}screens/views.jpg`} width="1440" height="860" alt="D'Workbench inbox narrowed by a saved view to the three conversations that carry a PDF: a survey access email and two supplier invoices." loading="lazy">
+        <figcaption>A saved view: every conversation with a PDF.</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature feature-flip">
+      <div>
+        <span class="eyebrow">02 · On the right job</span>
+        <h3>Filed to the customer and the job, and kept there</h3>
+        <ul>
+          <li>Your own rules file mail to its job; replies follow their thread</li>
+          <li>Saved views by supplier, address, type of email or job</li>
+          <li>Open a contact and see their jobs and everything said with them, newest first</li>
+          <li>Every change records who made it, when, and what it replaced</li>
+        </ul>
+      </div>
+      <figure class="shot">
+        <img src={`${base}screens/contact.jpg`} width="1440" height="860" alt="A contact's history in D'Workbench: their job with its stage and address, then their SMS, WhatsApp and emails, newest first, each linked to the job." loading="lazy">
+        <figcaption>A contact's history: their job, and eleven messages across SMS, WhatsApp and email.</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature">
+      <div>
+        <span class="eyebrow">03 · Claude, inside it</span>
+        <h3>An assistant that works the inbox with you</h3>
+        <ul>
+          <li>Drafts replies for a person to check and send</li>
+          <li>Files and links mail, tags senders, adds notes and follow-ups</li>
+          <li>Reads a whole job before it answers: the customer, the visits, what was said</li>
+          <li>Everything it does is marked as Claude's, and what it may do alone is your setting</li>
+        </ul>
+        <p class="feature-note"><span class="offer-status status-roadmap">Early access</span> Connects from claude.ai, the Claude apps or ChatGPT. Being switched on with founding partners.</p>
+      </div>
+      <div class="assist" aria-label="Example: what Claude does with a new email">
+        <div class="panel-top"><span>Claude · <b>new email</b></span><span>example</span></div>
+        <ul>
+          <li><span class="dot dot-blue"></span><div>Read: survey access, flat 2<small>letting agent · keys at their office</small></div><span class="tag">read</span></li>
+          <li><span class="dot dot-green"></span><div>Linked to the job<small>matched by the job number in the subject</small></div><span class="tag">filed</span></li>
+          <li><span class="dot dot-amber"></span><div>Note for the surveyor<small>collect keys before 5pm, return same day</small></div><span class="tag">note</span></li>
+          <li><span class="dot dot-amber"></span><div>Reply drafted<small>waiting for a person to send</small></div><span class="tag">draft</span></li>
+        </ul>
+        <p class="panel-foot">Claude does the filing. <b>You decide what goes out.</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="grows" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Grows with you</span>
+      <h2>Start with the inbox. Switch on the rest when you need it.</h2>
+      <p>One record underneath, so switching on the next part never means moving your data.</p>
+    </div>
+    <div class="offer-grid">
+      <article class="offer offer-featured">
+        <span class="offer-status status-core">Start here</span>
+        <span class="eyebrow">Realay</span>
+        <h3>The inbox and CRM</h3>
+        <p>Customers, enquiries and every conversation, filed to the right job, with Claude.</p>
+        <ul><li>Shared inbox across your mailboxes</li><li>Contacts, enquiries and follow-ups</li><li>Saved views and automations</li></ul>
+      </article>
+      <article class="offer">
+        <span class="offer-status status-core">Add when ready</span>
+        <span class="eyebrow">Fieldline</span>
+        <h3>The calendar and the crews</h3>
+        <p>Surveys and installs booked against the job, and the day planned for each crew.</p>
+        <ul><li>One calendar for the whole team</li><li>Dispatch: the day planned per crew</li><li>Field notes back to the job</li></ul>
+      </article>
+      <article class="offer">
+        <span class="offer-status status-core">Add when ready</span>
+        <span class="eyebrow">Workbench</span>
+        <h3>The whole job, to the money</h3>
+        <p>Quotes, supplier orders, the workshop and invoices, on the same job record.</p>
+        <ul><li>Quotes and supplier orders</li><li>Invoices and payments</li><li>Snagging and warranty</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section band" id="true">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Founding partners</span>
+      <h2>Early, honest, and priced that way.</h2>
+      <p>D'Workbench is taking its first outside businesses. Here is exactly what that means.</p>
+    </div>
+    <div class="honesty">
+      <div>
+        <h3>What's true today</h3>
+        <ul>
+          <li>It runs on a working glazing business's real mailbox.</li>
+          <li>The inbox, saved views, contact history and automations are built.</li>
+          <li>Claude's connection is built and being switched on now.</li>
+          <li>Hosted in London; each business has its own workspace.</li>
+          <li>Nothing is sent until two separate sending switches are on.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What a founding partner gets</h3>
+        <ul>
+          <li>A named discount for twelve months, agreed in writing.</li>
+          <li>A direct line to the founder, not a ticket queue.</li>
+          <li>A real say in what gets built next.</li>
+          <li>You pay from day one: that's what makes the feedback honest.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="demo">
+  <div class="wrap apply">
+    <div>
+      <span class="eyebrow">Book a demo</span>
+      <div class="section-head" style="margin:1rem 0 0"><h2>See your kind of week in 20 minutes.</h2><p>We share a screen on the practice workspace — nothing of yours is needed — and walk through an enquiry, a supplier email and a customer chasing a date.</p></div>
+      <dl class="fit">
+        <div><dt>Best fit</dt><dd>Trade businesses whose jobs run enquiry → survey → install → aftercare, with more than one person answering the email.</dd></div>
+        <div><dt>You need</dt><dd>Twenty minutes and a rough idea of where conversations go missing.</dd></div>
+        <div><dt>You get</dt><dd>A straight answer on whether it fits, and the founding-partner terms if it does.</dd></div>
+      </dl>
+    </div>
+    <form class="form" id="demo-form" novalidate>
+      <div class="form-row">
+        <label class="field"><span>Your name</span><input name="name" autocomplete="name" required></label>
+        <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
+      </div>
+      <div class="form-row">
+        <label class="field"><span>Business</span><input name="business" autocomplete="organization" required></label>
+        <label class="field"><span>Trade</span>
+          <select name="trade">
+            <option>Glazing / windows &amp; doors</option>
+            <option>Roofing</option>
+            <option>Home improvement / installations</option>
+            <option>HVAC / plumbing / electrical</option>
+            <option>Other trade</option>
+          </select>
+        </label>
+      </div>
+      <div class="form-row">
+        <label class="field"><span>Your email is on</span>
+          <select name="mail"><option>Gmail / Google Workspace</option><option>Outlook / Microsoft 365</option><option>Our host's email</option><option>A mix</option></select>
+        </label>
+        <label class="field"><span>Good times for a call</span><input name="times" placeholder="e.g. weekday mornings"></label>
+      </div>
+      <label class="field"><span>Where do conversations go missing?</span><textarea name="problem" placeholder="Personal inboxes, WhatsApp, calls nobody wrote down…"></textarea></label>
+      <button class="btn btn-primary" type="submit">Ask for a demo →</button>
+      <p class="form-status" id="demo-form-status" role="status" hidden>Your email app should now be open with the request filled in — just press send. Nothing opened? Email <a href={demoMail}>asmultitaskcollective@gmail.com</a> directly.</p>
+      <p class="form-note">Sending opens your email app with the details filled in — nothing goes through a third-party server. Prefer plain email? Write to <a href={demoMail}>asmultitaskcollective@gmail.com</a>.</p>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Questions</span><h2>Before you book.</h2></div>
+    <div class="faq">
+      {faqs.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+    </div>
+    <p class="proof-note">Want someone to run it for you as well? ASMC's <a href={`${base}#offer`}>managed operations</a> puts a trained operator inside D'Workbench with you.</p>
+  </div>
+</section>
+
+<script is:inline>
+(function () {
+  var form = document.getElementById("demo-form");
+  if (!form) return;
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var missing = ["name", "email", "business"].filter(function (n) { return !form[n].value.trim(); });
+    if (missing.length || !form.email.checkValidity()) {
+      (form[missing[0]] || form.email).focus();
+      form.reportValidity();
+      return;
+    }
+    var get = function (n) { return form[n].value.trim(); };
+    var body = [
+      "Name: " + get("name"),
+      "Email: " + get("email"),
+      "Business: " + get("business"),
+      "Trade: " + get("trade"),
+      "Email is on: " + get("mail"),
+      "Good times: " + (get("times") || "-"),
+      "",
+      "Where conversations go missing:",
+      get("problem") || "-",
+    ].join("\n");
+    var subject = "D'Workbench demo — " + get("business");
+    window.location.href = "mailto:asmultitaskcollective@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    var status = document.getElementById("demo-form-status");
+    if (status) status.hidden = false;
+  });
+})();
+</script>
+</Base>
